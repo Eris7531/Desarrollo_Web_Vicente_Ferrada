@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de miembro</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+<body>
+    <div class="main-container">
+        <div id="val-box" hidden>
+            <h2 id="val-msg"></h2>
+            <ul id="val-list"></ul>
+        </div>
+        <header class="form-header">
+            <h1>Registro de miembro de la comunidad DCC</h1>
+        </header>
+        <nav class="navigation-container form-nav" aria-label="Formulario de registro">
+            <form name="registrationForm" method="post" enctype="multipart/form-data">
+                <label for="nombre">Nombre completo <span class="req">*</span></label>
+                <input type="text" name="nombre" id="nombre" autocomplete="name" maxlength="120">
+
+                <label for="email">Correo electrónico <span class="req">*</span></label>
+                <input type="email" name="email" id="email" autocomplete="email" maxlength="120">
+
+                <label for="phone">Teléfono (solo dígitos) <span class="req">*</span></label>
+                <input type="text" name="phone" id="phone" inputmode="numeric" autocomplete="tel" maxlength="15">
+
+                <label for="select-cargo">Tipo de miembro <span class="req">*</span></label>
+                <select name="select-cargo" id="select-cargo">
+                    <option value="">Seleccione una opción</option>
+                </select>
+
+                <button id="submit-btn" type="button">Enviar</button>
+            </form>
+            <button type="button" class="nav-btn" onclick="window.location.href='HomePage.html'">Volver al inicio</button>
+        </nav>
+    </div>
+    <script src="./js/selectRegistration.js"></script>
+    <script src="./js/validationRegistrarion.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicadores y gráficos</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+<body>
+    <div class="main-container main-container--wide">
+        <header class="list-header">
+            <h1>Indicadores (datos de ejemplo)</h1>
+        </header>
+
+        <section class="charts-section" aria-labelledby="chart-members-heading">
+            <h2 id="chart-members-heading" class="chart-title">Miembros por tipo</h2>
+            <canvas id="chart-miembros" width="640" height="320" role="img" aria-label="Gráfico de barras: cantidad de miembros por tipo"></canvas>
+            <ul class="chart-legend" id="legend-miembros"></ul>
+        </section>
+
+        <section class="charts-section" aria-labelledby="chart-act-heading">
+            <h2 id="chart-act-heading" class="chart-title">Actividades informadas por categoría</h2>
+            <canvas id="chart-actividades" width="640" height="320" role="img" aria-label="Gráfico de barras horizontal: actividades por categoría"></canvas>
+            <ul class="chart-legend" id="legend-actividades"></ul>
+        </section>
+
+        <nav class="navigation-container list-footer-nav">
+            <button type="button" class="nav-btn" onclick="window.location.href='HomePage.html'">Volver al inicio</button>
+        </nav>
+    </div>
+    <script src="./js/graphData.js"></script>
+</body>
+</html>

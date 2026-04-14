@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de actividad</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+<body>
+    <div class="main-container main-container--form-activity">
+        <div id="val-box" hidden>
+            <h2 id="val-msg"></h2>
+            <ul id="val-list"></ul>
+        </div>
+        <header class="form-header">
+            <h1>Informar una actividad</h1>
+        </header>
+        <nav class="navigation-container form-nav" aria-label="Formulario de actividad">
+            <form name="myForm" method="post" enctype="multipart/form-data">
+                <label for="nombre">Nombre de quien informa <span class="req">*</span></label>
+                <input type="text" name="nombre" id="nombre" autocomplete="name" maxlength="120">
+
+                <label for="email">Correo electrónico <span class="req">*</span></label>
+                <input type="email" name="email" id="email" autocomplete="email" maxlength="120">
+
+                <label for="phone">Teléfono (solo dígitos) <span class="req">*</span></label>
+                <input type="text" name="phone" id="phone" inputmode="numeric" autocomplete="tel" maxlength="15">
+
+                <label for="select-actividad">Tipo de actividad <span class="req">*</span></label>
+                <select name="select-actividad" id="select-actividad">
+                    <option value="">Seleccione un tipo</option>
+                </select>
+
+                <label for="descripcion">Nombre de la Actividad<span class="req">*</span></label>
+                <input type="text" name="descripcion" id="descripcion" maxlength="200">
+
+                <fieldset class="schedule-fieldset">
+                    <legend>Horario habitual <span class="req">*</span></legend>
+                    <div class="dias-grid" role="group" aria-label="Días de la semana">
+                        <label class="dia-label"><input type="checkbox" name="dia" value="lunes"> Lun</label>
+                        <label class="dia-label"><input type="checkbox" name="dia" value="martes"> Mar</label>
+                        <label class="dia-label"><input type="checkbox" name="dia" value="miercoles"> Mié</label>
+                        <label class="dia-label"><input type="checkbox" name="dia" value="jueves"> Jue</label>
+                        <label class="dia-label"><input type="checkbox" name="dia" value="viernes"> Vie</label>
+                        <label class="dia-label"><input type="checkbox" name="dia" value="sabado"> Sáb</label>
+                        <label class="dia-label"><input type="checkbox" name="dia" value="domingo"> Dom</label>
+                    </div>
+                    <label for="hora-inicio">Hora de inicio</label>
+                    <input type="time" name="hora-inicio" id="hora-inicio">
+                    <label for="hora-fin">Hora de término</label>
+                    <input type="time" name="hora-fin" id="hora-fin">
+                </fieldset>
+
+                <label for="files">Archivos: fotos o videos (al menos uno) <span class="req">*</span></label>
+                <input type="file" name="files" id="files" multiple accept="image/*,video/*">
+
+                <label for="enlace">Enlace a contenido propio (sitio, álbum, repositorio, etc.) <span class="req">*</span></label>
+                <input type="url" name="enlace" id="enlace" placeholder="https://ejemplo.cl/mi-actividad" maxlength="500">
+
+                <button id="submit-btn" type="button">Enviar</button>
+            </form>
+            <button type="button" class="nav-btn" onclick="window.location.href='HomePage.html'">Volver al inicio</button>
+        </nav>
+    </div>
+    <script src="./js/selectActivity.js"></script>
+    <script src="./js/velidationActivity.js"></script>
+</body>
+</html>
