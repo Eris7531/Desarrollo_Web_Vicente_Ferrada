@@ -34,14 +34,14 @@ SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
 Base = declarative_base()
 
-# Referencias documentales: literales del ENUM en database/tarea2.sql (columnas mapeadas como String en el ORM).
+# Literales del ENUM `actividad.dia` en database/tarea2.sql (solo ASCII; ORM usa String).
 _dia_enum = (
     "lunes",
     "martes",
-    "miércoles",
+    "miercoles",
     "jueves",
     "viernes",
-    "sábado",
+    "sabado",
     "domingo",
 )
 _tipo_act_enum = ("arte", "deporte", "tecnología", "social", "recreación", "otra")
@@ -50,7 +50,7 @@ _ENLACE_MARKER = "\n\nEnlace: "
 
 
 def _nfc_str(value):
-    """Normaliza a NFC (evita que 'sábado' en NFD no coincida con literales ENUM en MySQL)."""
+    """Normaliza a NFC (útil para `tipo` con tilde; `dia` va en ASCII desde la app)."""
     if value is None:
         return None
     s = value if isinstance(value, str) else str(value)
@@ -69,11 +69,14 @@ TIPO_DB_A_ETIQUETA = {
 DIA_DB_A_ETIQUETA = {
     "lunes": "Lunes",
     "martes": "Martes",
-    "miércoles": "Miércoles",
+    "miercoles": "Miércoles",
     "jueves": "Jueves",
     "viernes": "Viernes",
-    "sábado": "Sábado",
+    "sabado": "Sábado",
     "domingo": "Domingo",
+    # Filas antiguas si aún existieran con ENUM acentuado:
+    "miércoles": "Miércoles",
+    "sábado": "Sábado",
 }
 
 
@@ -524,13 +527,7 @@ def create_miembro_actividades_fotos(
     uploaded_files,
     static_upload_folder,
 ):
-    """
-    actividad_rows: list of dicts dia, hora_inicio, duracion, tipo, nombre_actividad, descripcion
 
-    Retorna (éxito, mensaje_error_o_None, reutilizó_miembro_existente).
-    Si ya existe un miembro con la misma ficha, no se modifica la fila en `miembro`.
-    """
-    # static_upload_folder no se usa en el cuerpo; se mantiene en la firma por compatibilidad con app.py.
     session = SessionLocal()
     try:
         existente = _find_miembro_misma_ficha(

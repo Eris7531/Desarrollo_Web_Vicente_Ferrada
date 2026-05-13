@@ -1,15 +1,15 @@
 /**
  * Filtro región → comunas (solo UI; la región no se envía al servidor)
  * y diálogo para elegir un único día de la semana.
- * Valores del hidden `dia`: lunes, martes, miércoles, …, sábado, domingo (coinciden con ENUM en BD).
+ * Valores del hidden `dia`: lunes, martes, miercoles, …, sabado, domingo (ASCII = ENUM en BD).
  */
 const DIA_ETIQUETAS = {
   lunes: "Lunes",
   martes: "Martes",
-  miércoles: "Miércoles",
+  miercoles: "Miércoles",
   jueves: "Jueves",
   viernes: "Viernes",
-  sábado: "Sábado",
+  sabado: "Sábado",
   domingo: "Domingo",
 };
 

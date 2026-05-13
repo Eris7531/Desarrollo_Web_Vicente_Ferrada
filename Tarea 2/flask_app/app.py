@@ -1,6 +1,5 @@
 import hashlib
 import os
-import unicodedata
 import uuid
 
 import filetype
@@ -144,8 +143,7 @@ def registro():
 
     tipo_db = V.FORM_TIPO_TO_DB[act_tipo]
 
-    dia_key = unicodedata.normalize("NFC", dia_val.strip())
-    dia_db = V.DIAS_FORM_TO_DB.get(dia_key)
+    dia_db = V.normalize_dia_for_db(dia_val)
     if not dia_db:
         field_errors["dia"] = "Día no válido."
         return render_template(

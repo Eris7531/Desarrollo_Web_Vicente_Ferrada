@@ -7,18 +7,25 @@ import filetype
 
 EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
 
-# Valores ENUM de actividad.dia (coinciden con database/tarea2.sql; miércoles y sábado con tilde).
-DIAS_FORM_TO_DB = {
-    "lunes": "lunes",
-    "martes": "martes",
-    "miércoles": "miércoles",
-    "jueves": "jueves",
-    "viernes": "viernes",
-    "sábado": "sábado",
-    "domingo": "domingo",
-}
+DIAS_DB_CANONICAL = frozenset(
+    {"lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"}
+)
 
-# Formulario -> ENUM actividad.tipo en tarea2.sql
+
+def normalize_dia_for_db(raw):
+    """Convierte el valor del formulario al literal ASCII del ENUM (única forma en BD)."""
+    if not raw or not isinstance(raw, str):
+        return None
+    v = unicodedata.normalize("NFC", raw.strip())
+    if v in DIAS_DB_CANONICAL:
+        return v
+    legacy = {
+        "miércoles": "miercoles",
+        "sábado": "sabado",
+    }
+    return legacy.get(v)
+
+
 FORM_TIPO_TO_DB = {
     "Artística": "arte",
     "Deportiva": "deporte",
@@ -101,21 +108,10 @@ def time_to_minutes(time_str):
     return h * 60 + m
 
 
-# Legado (formulario con hora inicio / fin): no usado en la app Flask actual (duración vía HH:MM).
-# def duration_hhmm(start, end):
-#     mi = time_to_minutes(start)
-#     mf = time_to_minutes(end)
-#     if mi is None or mf is None or mf <= mi:
-#         return None
-#     d = mf - mi
-#     return f"{d // 60:02d}:{d % 60:02d}"
-
-
 def validate_single_dia(value):
     if not value or not isinstance(value, str):
         return False
-    key = unicodedata.normalize("NFC", value.strip())
-    return key in DIAS_FORM_TO_DB
+    return normalize_dia_for_db(value) is not None
 
 
 def validate_duration_hhmm(value):
@@ -132,16 +128,6 @@ def normalize_duration_hhmm(value):
         return "00:00"
     m = max(0, min(m, 24 * 60))
     return f"{m // 60:02d}:{m % 60:02d}"
-
-
-# Legado (varios días en checkbox): el registro actual exige un solo día (validate_single_dia).
-# def validate_schedule_days(dias_values):
-#     if not dias_values:
-#         return False
-#     for d in dias_values:
-#         if d not in DIAS_FORM_TO_DB:
-#             return False
-#     return True
 
 
 def validate_media_file_storage(file_storage):

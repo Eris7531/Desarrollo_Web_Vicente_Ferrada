@@ -11,4 +11,4 @@ Deciciones de diseño:
 
 NOTA IMPORTANTE: Al crear el segundo branch, el de Tarea2, tuve problemas, y se me borraron la mayoría de los archivos y no logré recuperar todos al momento de la entrega, por lo que hubieron errores que había solucionado antes ahora no funcionan al 100%:
 
-1. Error al registrar actividades en los días miércoles y domíngo por mal macheo debido a tildes.
+1. Error al registrar actividades en miércoles / sábado por desajuste tildes entre sabado y miercoles. -> solucionado con modificación a tarea2.sql o al aplicar el archivo 'ajuste.sql'.
