@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de miembro</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="main-container main-container--wide">
+        <header class="list-header">
+            <h1>{{ m.nombre }}</h1>
+            <p class="detail-meta">Registrado: {{ m.fecha_registro }} · {{ m.region }}, {{ m.comuna }}</p>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages" role="status">
+            {% for category, message in messages %}
+            <p class="flash flash--{{ category }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <section class="detail-block" aria-labelledby="member-data-heading">
+            <h2 id="member-data-heading">Datos de contacto</h2>
+            <ul class="detail-list">
+                <li><strong>Correo:</strong> {{ m.email }}</li>
+                <li><strong>Teléfono:</strong> +56 {{ m.telefono }}</li>
+            </ul>
+        </section>
+
+        <section class="detail-block" aria-labelledby="acts-heading">
+            <h2 id="acts-heading">Actividades informadas</h2>
+            {% if m.actividades_total and m.actividades_total > 0 %}
+            <p class="home-recent-note">Mostrando {{ m.actividades|length }} de {{ m.actividades_total }} actividad(es). Página {{ m.actividades_page }} de {{ m.actividades_pages }}.</p>
+            <div class="activities-stack">
+                {% for a in m.actividades %}
+                <article class="activity-card">
+                    <h3>{{ a.nombre }}</h3>
+                    <p><strong>Tipo:</strong> {{ a.tipo }} · <strong>Día:</strong> {{ a.dia }} · <strong>Inicio:</strong> {{ a.hora_inicio }} · <strong>Duración:</strong> {{ a.duracion }}</p>
+                    <p><strong>Descripción:</strong> {{ a.descripcion }}</p>
+                    <p><strong>Enlace:</strong> {% if a.enlace %}<a href="{{ a.enlace }}" rel="noopener noreferrer">{{ a.enlace }}</a>{% else %}—{% endif %}</p>
+                    {% if a.fotos and a.fotos|length > 0 %}
+                    <div class="activity-media">
+                        {% for f in a.fotos %}
+                        {% set rel = f.ruta %}
+                        {% if rel.startswith('uploads/') %}
+                        <figure class="media-thumb">
+                            {% if rel.lower().endswith('.mp4') or rel.lower().endswith('.webm') or rel.lower().endswith('.ogg') %}
+                            <video controls src="{{ url_for('static', filename=rel) }}" width="320"></video>
+                            {% else %}
+                            <img src="{{ url_for('static', filename=rel) }}" alt="{{ f.nombre }}" width="320" loading="lazy">
+                            {% endif %}
+                            <figcaption>{{ f.nombre }}</figcaption>
+                        </figure>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <form class="activity-delete-form" method="post"
+                          action="{{ url_for('eliminar_actividad', mid=m.id, aid=a.id) }}"
+                          onsubmit="return confirm('¿Eliminar esta actividad? Esta acción no se puede deshacer.');">
+                        <input type="hidden" name="act_page" value="{{ m.actividades_page }}">
+                        <button type="submit" class="btn-eliminar-actividad">Eliminar actividad</button>
+                    </form>
+                </article>
+                {% endfor %}
+            </div>
+            {% if m.actividades_pages > 1 %}
+            <nav class="pagination actividades-pagination" aria-label="Paginación de actividades">
+                {% set mid = m.id %}
+                {% set cp = m.actividades_page %}
+                {% set tp = m.actividades_pages %}
+                <a class="nav-btn nav-btn--small" href="{{ url_for('miembro_detalle', mid=mid, act_page=cp-1) if cp > 1 else '#' }}"
+                   {% if cp <= 1 %}aria-disabled="true" style="pointer-events:none;opacity:0.5"{% endif %}>Actividades — anterior</a>
+                <span class="page-info">Página {{ cp }} / {{ tp }}</span>
+                <a class="nav-btn nav-btn--small" href="{{ url_for('miembro_detalle', mid=mid, act_page=cp+1) if cp < tp else '#' }}"
+                   {% if cp >= tp %}aria-disabled="true" style="pointer-events:none;opacity:0.5"{% endif %}>Actividades — siguiente</a>
+            </nav>
+            {% endif %}
+            {% else %}
+            <p>No hay actividades registradas para este miembro.</p>
+            {% endif %}
+        </section>
+
+        <nav class="navigation-container list-footer-nav">
+            <a class="nav-btn" href="{{ url_for('miembros') }}">Volver al listado</a>
+            <a class="nav-btn" href="{{ url_for('home') }}">Inicio</a>
+        </nav>
+    </div>
+</body>
+</html>

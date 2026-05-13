@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar miembro y actividades</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="main-container main-container--form-activity">
+        <div id="val-box" {% if not errors and not field_errors %}hidden{% endif %}>
+            <h2 id="val-msg">
+                {% if errors %}
+                {{ errors[0] }}
+                {% elif field_errors %}
+                Revise los campos indicados abajo.
+                {% else %}
+                Validación
+                {% endif %}
+            </h2>
+            <ul id="val-list">
+                {% for key, msg in field_errors.items() %}
+                <li><strong>{{ key }}</strong>: {{ msg }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <header class="form-header">
+            <h1>Registrar miembro y actividades</h1>
+            <p class="form-intro">Formulario unificado: datos del miembro y actividad informada, con validación en el navegador y en el servidor.</p>
+        </header>
+
+        <nav class="navigation-container form-nav" aria-label="Registro completo">
+            <form name="combinedForm" method="post" enctype="multipart/form-data" action="{{ url_for('registro') }}" novalidate>
+                <h2 class="section-title">Datos del miembro</h2>
+                <label for="nombre">Nombre completo <span class="req">*</span></label>
+                <input type="text" name="nombre" id="nombre" autocomplete="name" maxlength="120" value="{{ form.nombre if form else '' }}">
+                {% if field_errors.get('nombre') %}<p class="field-error">{{ field_errors.nombre }}</p>{% endif %}
+
+                <label for="email">Correo electrónico <span class="req">*</span></label>
+                <input type="email" name="email" id="email" autocomplete="email" maxlength="80" value="{{ form.email if form else '' }}">
+                {% if field_errors.get('email') %}<p class="field-error">{{ field_errors.email }}</p>{% endif %}
+
+                <label for="phone">Teléfono (solo dígitos) <span class="req">*</span></label>
+                <input type="text" name="phone" id="phone" inputmode="numeric" autocomplete="tel" maxlength="15" value="{{ form.phone if form else '' }}">
+                {% if field_errors.get('phone') %}<p class="field-error">{{ field_errors.phone }}</p>{% endif %}
+
+                <p class="home-recent-note">La región siguiente solo sirve para acotar la lista de comunas; <strong>no</strong> se guarda en la base de datos.</p>
+                <label for="region-filtro">Región</label>
+                <select id="region-filtro" autocomplete="address-level1" aria-label="Filtrar comunas por región">
+                    <option value="">Todas las regiones</option>
+                    {% for r in regiones %}
+                    <option value="{{ r.id }}">{{ r.nombre }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="comuna_id">Comuna <span class="req">*</span></label>
+                <select name="comuna_id" id="comuna_id">
+                    <option value="">Seleccione comuna</option>
+                    {% for c in comunas %}
+                    <option value="{{ c.id }}" data-region-id="{{ c.region_id }}" {% if form and form.comuna_id|string == c.id|string %}selected{% endif %}>{{ c.nombre }}</option>
+                    {% endfor %}
+                </select>
+                {% if field_errors.get('comuna_id') %}<p class="field-error">{{ field_errors.comuna_id }}</p>{% endif %}
+
+                <h2 class="section-title">Actividad informada</h2>
+
+                <label for="select-actividad">Tipo de actividad <span class="req">*</span></label>
+                <select name="select-actividad" id="select-actividad" data-initial="{{ form.select_actividad if form else '' }}">
+                    <option value="">Seleccione un tipo</option>
+                </select>
+                {% if field_errors.get('select-actividad') %}<p class="field-error">{{ field_errors['select-actividad'] }}</p>{% endif %}
+
+                <label for="descripcion">Nombre de la actividad <span class="req">*</span></label>
+                <input type="text" name="descripcion" id="descripcion" maxlength="200" value="{{ form.descripcion if form else '' }}">
+                {% if field_errors.get('descripcion') %}<p class="field-error">{{ field_errors.descripcion }}</p>{% endif %}
+
+                <fieldset class="schedule-fieldset">
+                    <legend>Horario habitual <span class="req">*</span></legend>
+                    <input type="hidden" name="dia" id="dia-elegido" value="{{ form.dia if form else '' }}">
+                    <div class="dia-row">
+                        <button type="button" id="btn-elegir-dia" class="nav-btn nav-btn--small">Elegir día de la semana…</button>
+                        <span id="dia-etiqueta" class="home-recent-note" aria-live="polite"></span>
+                    </div>
+                    {% if field_errors.get('dia') %}<p class="field-error">{{ field_errors.dia }}</p>{% endif %}
+
+                    <label for="hora-inicio">Hora de inicio</label>
+                    <input type="time" name="hora-inicio" id="hora-inicio" value="{{ form.hora_inicio if form else '' }}">
+
+                    <label for="duracion">Duración de la actividad</label>
+                    <input type="time" name="duracion" id="duracion" value="{{ form.duracion if form else '' }}" title="Duración en horas y minutos (ej. 1 h 30 min → 01:30)">
+                    {% if field_errors.get('horario') %}<p class="field-error">{{ field_errors.horario }}</p>{% endif %}
+                </fieldset>
+
+                <dialog id="dia-dialog" class="dia-dialog-panel" aria-labelledby="dia-dialog-title">
+                    <h3 id="dia-dialog-title">Seleccione un día</h3>
+                    <p class="home-recent-note">Debe elegir exactamente uno.</p>
+                    <div class="dia-dialog-grid" role="radiogroup" aria-label="Día de la semana">
+                        <label class="dia-label"><input type="radio" name="dia-temp" value="lunes"> Lun</label>
+                        <label class="dia-label"><input type="radio" name="dia-temp" value="martes"> Mar</label>
+                        <label class="dia-label"><input type="radio" name="dia-temp" value="miércoles"> Mié</label>
+                        <label class="dia-label"><input type="radio" name="dia-temp" value="jueves"> Jue</label>
+                        <label class="dia-label"><input type="radio" name="dia-temp" value="viernes"> Vie</label>
+                        <label class="dia-label"><input type="radio" name="dia-temp" value="sábado"> Sáb</label>
+                        <label class="dia-label"><input type="radio" name="dia-temp" value="domingo"> Dom</label>
+                    </div>
+                    <div class="dia-dialog-actions">
+                        <button type="button" class="nav-btn nav-btn--small" id="dia-dialog-cancel">Cancelar</button>
+                        <button type="button" class="nav-btn nav-btn--small" id="dia-dialog-confirm">Aceptar</button>
+                    </div>
+                </dialog>
+
+                <label for="files">Archivos: fotos o videos (al menos uno, máximo cinco) <span class="req">*</span></label>
+                <input type="file" name="files" id="files" multiple accept="image/*,video/*">
+                {% if field_errors.get('files') %}<p class="field-error">{{ field_errors.files }}</p>{% endif %}
+
+                <label for="enlace">Enlace a contenido propio (sitio, álbum, repositorio, etc.) <span class="req">*</span></label>
+                <input type="url" name="enlace" id="enlace" placeholder="https://ejemplo.cl/mi-actividad" maxlength="500" value="{{ form.enlace if form else '' }}">
+                {% if field_errors.get('enlace') %}<p class="field-error">{{ field_errors.enlace }}</p>{% endif %}
+
+                <button id="submit-btn" type="button">Validar y enviar</button>
+            </form>
+            <a class="nav-btn" href="{{ url_for('home') }}">Volver al inicio</a>
+        </nav>
+    </div>
+    <script src="{{ url_for('static', filename='js/selectActivity.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/registerForm.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/validationCombined.js') }}"></script>
+</body>
+</html>
