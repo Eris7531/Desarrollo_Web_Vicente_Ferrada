@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCC — Inicio</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="main-container main-container--wide">
+        <h1 class="page-title">DCC — Miembros y actividades</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages" role="status">
+            {% for category, message in messages %}
+            <p class="flash flash--{{ category }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <nav class="navigation-container" aria-label="Navegación principal">
+            <a class="nav-btn" href="{{ url_for('registro') }}">Registrar miembro y actividades</a>
+            <a class="nav-btn" href="{{ url_for('miembros') }}">Listado de miembros</a>
+            <a class="nav-btn" href="{{ url_for('estadisticas') }}">Estadísticas (indicadores y métricas)</a>
+        </nav>
+
+        <section class="home-recent" aria-labelledby="recent-heading">
+            <h2 id="recent-heading" class="list-header">Últimos miembros registrados</h2>
+            <p class="home-recent-note">Se muestran los 5 registros más recientes. La columna «Tipo(s) actividad» resume los tipos en la base. Puede hacer clic en una fila para ver el detalle.</p>
+            {% if ultimos and ultimos|length > 0 %}
+            <div class="table-wrap">
+                <table class="data-table">
+                    <caption class="sr-only">Últimos cinco miembros agregados</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Teléfono (+56)</th>
+                            <th scope="col">Tipo(s) actividad</th>
+                            <th scope="col">Actividades</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in ultimos %}
+                        <tr class="data-row-click" data-href="{{ url_for('miembro_detalle', mid=row.id) }}">
+                            <td>{{ row.nombre }}</td>
+                            <td>{{ row.email }}</td>
+                            <td>+56 {{ row.telefono }}</td>
+                            <td>{{ row.tipo }}</td>
+                            <td>{{ row.actividades }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>Aún no hay miembros registrados en la base de datos.</p>
+            {% endif %}
+        </section>
+    </div>
+    <script>
+    document.querySelectorAll(".data-row-click").forEach(function (row) {
+        row.addEventListener("click", function () {
+            var url = row.getAttribute("data-href");
+            if (url) window.location.href = url;
+        });
+        row.style.cursor = "pointer";
+    });
+    </script>
+</body>
+</html>
