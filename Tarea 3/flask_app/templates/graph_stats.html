@@ -9,7 +9,8 @@
 <body>
     <div class="main-container main-container--wide">
         <header class="list-header">
-            <h1>Indicadores (datos desde la base tarea2)</h1>
+            <!-- <h1>Indicadores (datos desde las tablas dentro del schema tarea2)</h1> -->
+            <h1>Indicadores y gráficos</h1>
             <p class="form-intro">Los gráficos se construyen con consultas agregadas a las tablas <code>miembro</code>, <code>comuna</code>, <code>region</code> y <code>actividad</code>.</p>
         </header>
 
@@ -17,19 +18,22 @@
 
         <section class="charts-section" aria-labelledby="chart-members-heading">
             <h2 id="chart-members-heading" class="chart-title">Miembros por región</h2>
-            <p class="home-recent-note">Cantidad de miembros según la comuna (agrupado por región).</p>
+            <!-- <p class="home-recent-note">Cantidad de miembros según la comuna (agrupado por región).</p> -->
             <canvas id="chart-miembros" width="640" height="320" role="img" aria-label="Gráfico de barras: miembros por región"></canvas>
             <ul class="chart-legend" id="legend-miembros"></ul>
         </section>
 
         <section class="charts-section" aria-labelledby="chart-act-heading">
             <h2 id="chart-act-heading" class="chart-title">Actividades por categoría</h2>
-            <p class="home-recent-note">Conteo de filas en <code>actividad</code> por tipo.</p>
+            <!-- <p class="home-recent-note">Conteo de filas en <code>actividad</code> por tipo.</p> -->
             <canvas id="chart-actividades" width="640" height="320" role="img" aria-label="Gráfico horizontal: actividades por categoría"></canvas>
             <ul class="chart-legend" id="legend-actividades"></ul>
         </section>
 
         <!-- Inicio sección agregados tarea 3 -->
+
+        <!-- Para los 3 siguientes gráficos se debe usar Javascript (XHR o fetch) para generar los gráficos en el lado del cliente, llamando 
+         a una URL del lado del servidor que obtiene la información desde la base de datos. -->
     
         <section class="charts-section" aria-labelledby="chart-lineNumMembersPerDay-heading">
             <h2 id="chart-lineNumMembersPerDay-heading" class="chart-title">Miembros Registrados por Día</h2>
