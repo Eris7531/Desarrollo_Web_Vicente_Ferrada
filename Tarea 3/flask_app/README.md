@@ -18,7 +18,32 @@ Tarea 3:
 
 Deciciones de diseño:
 
-1. A
-2. B
-3. C
-4. D
+1. En la tarea 2, cuando uno quiere ver los detalles de una actividad de parte de un alumno, puede acceder desde el 'Listado de Miembros' o desde la Vista de inicio, en donde se muestran los últimos 5 usuarios que agregaron actividades y qué actividades tienen, al hacer click sobre la línea que tiene el usuario con la actividad que uno desea revisar en detalle. Esto te dirige a una página similar a un perfil, en donde uno puede ver los detalles del miembro y *todas* las *actividades* registradas a su nombre. 
+
+Esto se visualiza como bloques que contienen la información de la actividad. Al tener *múltiples* actividades dentro del perfil de un mismo usuario, agregar una caja de comentarios a cada actividad de un usuario agregaría demaciada información. Además, en caso de que una actividad tenga comentarios, la siguiente actividad dentro del perfil se vería deplazada más abajo, lo cual no es ideal visualmente.
+
+08/06: Idea: Hacer que cada actividad dentro de un perfil tenga una sección de comentarios en su sección inferior, la cual debe poder expanderse al momento de hacer click sobre esta. De este modo, a menos que uno quiera interactuar con los comentarios de dicha actividad (sea leer los ya escritos o escribir uno nuevo), esta caja de comentarios no generará ruido visual innecesario. La tarea no pide poder agragar 'respuestas' a comentarios anteriores, así que no se considerará esa opción.
+Se puede usar (https://www.w3schools.com/howto/howto_js_collapsible.asp).
+
+2. Para la sección de gráficos se mantendrán los gráficos actuales de barras, los cuales ya estaban configurados para repsesentar y comparar:
+
+ 1) La cantidad de miembros de cada región.
+ 2) La cantidad de actividades registradas de cada tipo / categoría.
+
+Tras eso se agregarán los graficos que se piden en el enunciado:
+
+ 1) Gráfico de lineas que indique: Cantidad de Miembros Registrados v/s Día, indicando la cantidad de registros por cada día.
+ 2) Gráfico de torta que indique: Total de actividades de cada tipo / categoría. (Se considera eliminar el de barras de la tarea anterior que cumple la misma función).
+ 3) Gráfico de barras que indique: Total de *actividades* v/s *Comúna*. 
+    08/06: Idea: Asignar un color a cada región y agregar una leyenda de esta asignación, de modo de que se pueda identificar a qué región corresponde cada comuna.
+
+3. Para hacer los gráficos se decidió usar Highcharts 
+
+ 1) Información Flot: 
+    1) Documentación e Introducción: (https://github.com/flot/flot/blob/master/API.md) 
+    2) Pie Chart Example: (https://www.flotcharts.org/flot/examples/series-pie/index.html)
+
+ 2) Información Highcharts:
+    1) Pie Chart with Code: (https://www.highcharts.com/docs/chart-and-series-types/pie-chart)
+    2) Bar Chart with Code: (https://www.highcharts.com/docs/chart-and-series-types/bar-chart)
+    3) Line Chart with Code: (https://www.highcharts.com/docs/chart-and-series-types/line-chart)
