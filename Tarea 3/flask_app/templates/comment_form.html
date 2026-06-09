@@ -62,10 +62,17 @@ tabla comentario.
                 {% if field_errors.get('nombre_comentarista') %}<p class="field-error">{{ field_errors.nombre_comentarista }}</p>{% endif %}
 
                 <label for="texto_comentario">Contenido del Comentario <span class="req">*</span></label>
-                <input type="text box" texto="comentario" numberMaxLines="4" numberMaxColumns="50" value="{{ "<!-- Formula de validación comentario -->" }}">
+                <textarea 
+                    id="texto_comentario" 
+                    name="comentario" 
+                    rows="4" 
+                    cols="50" 
+                    minlength="5" 
+                    required> {{ request.form.get('comentario', '') }}
+                </textarea>
                 {% if field_errors.get('comentario') %}<p class="field-error">{{ field_errors.comentarios }}</p>{% endif %}
 
-                <button type="Comentar">Subir Comentario</button> <!-- Falta crear la función que suba el contenido a la base de datos -->
+                <button type="submit">Subir Comentario</button> <!-- Falta crear la función que suba el contenido a la base de datos -->
             </form>
             <!-- Debemos trabajar con esta sección internamente, de modo de que se comunique con el servidor, y que se valide nuevamente, de 
              modo de que se eviten inyecciónes maliciosas. -->

@@ -332,7 +332,7 @@ def estadisticas():
 # Queremos crear una función para obtener los datos de la base de datos, específicamente para obtener los datos dentro de la tabala
 # 'comentario' dentro del schema 'tarea2'.
 @app.route("/miembros/comentario", methods=["GET"])
-def getComentario():
+def displayComentario():
     return "ok"
 
 # En esta función queremos tomar un comentario ingreado en el formulario 'comment_form.html' y guardarlo en la base de datos,
@@ -341,7 +341,6 @@ def getComentario():
 @app.route("/miembros/comentario/subirComentario", methods=["POST"])
 def subirComentario():
     return "ok"
-
 
 if __name__ == "__main__":
     app.run(debug=True)

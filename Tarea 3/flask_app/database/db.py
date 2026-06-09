@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 import os
 import unicodedata
 
@@ -148,7 +148,16 @@ class Actividad(Base):
         back_populates="actividad",
         cascade="all, delete-orphan",
     )
+    
+    # Inicio agregados para tarea 3: Parte 1.
+    
+    comentarios = relationship(
+        "Comentario",
+        back_populates="actividad",
+        cascade="all, delete-orphan",
+    )
 
+    # Fin agregados para tarea 3: Parte 1.
 
 class Foto(Base):
     __tablename__ = "foto"
@@ -159,6 +168,89 @@ class Foto(Base):
     actividad_id = Column(Integer, ForeignKey("actividad.id"), nullable=False)
 
     actividad = relationship("Actividad", back_populates="fotos")
+    
+    
+# Inicio agregados tarea 3: Parte 2.
+
+class Comentario(Base):
+    __tablename__ = "comentario"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    comentarista_nombre = Column(String(255), nullable=False)
+    comentario_texto = Column(Text, nullable=False)
+    fecha_comentario = Column(DateTime, nullable=False, default=datetime.now)
+    actividad_id = Column(Integer, ForeignKey("actividad.id"), nullable=False)
+
+    actividad = relationship("Actividad", back_populates="comentarios")
+
+
+def get_comments_for_actividad_json(actividad_id):
+    
+    # Retorna comentarios de una actividad en formato JSON-serializable para poder usar
+    # adecuadamente dentro de JavaScript.
+    # Esto con objetivo de hacer uso de las funciones fetch/XHR como pide el enunciado.
+    
+    session = SessionLocal()
+    try:
+        comentarios = (
+            session.query(Comentario)
+            .filter(Comentario.actividad_id == actividad_id)
+            .order_by(Comentario.fecha_comentario.desc())
+            .all()
+        )
+        return [
+            {
+                "id": c.id,
+                "nombre": c.comentarista_nombre,
+                "texto": c.comentario_texto,
+                "fecha": c.fecha_comentario.isoformat() if c.fecha_comentario else None,
+                "actividad_id": c.actividad_id,
+            }
+            for c in comentarios
+        ]
+    finally:
+        session.close()
+
+
+def create_comentario(comentarista_nombre, comentario_texto, actividad_id):
+    session = SessionLocal()
+    try:
+        nombre_limpio = (comentarista_nombre or "").strip()
+        if len(nombre_limpio) < 3 or len(nombre_limpio) > 255:
+            return False, None, "Nombre debe tener entre 3 y 255 caracteres."
+
+        texto_limpio = (comentario_texto or "").strip()
+        if len(texto_limpio) < 5:
+            return False, None, "Comentario debe tener al menos 5 caracteres."
+
+        act = session.query(Actividad).filter_by(id=actividad_id).first()
+        if not act:
+            return False, None, "Actividad no encontrada."
+
+        nuevo_comentario = Comentario(
+            comentarista_nombre=nombre_limpio,
+            comentario_texto=texto_limpio,
+            actividad_id=actividad_id,
+            fecha_comentario=datetime.utcnow(),
+        )
+        session.add(nuevo_comentario)
+        session.commit()
+
+        datos_comentario = {
+            "id": nuevo_comentario.id,
+            "nombre": nuevo_comentario.comentarista_nombre,
+            "texto": nuevo_comentario.comentario_texto,
+            "fecha": nuevo_comentario.fecha_comentario.isoformat(),
+            "actividad_id": nuevo_comentario.actividad_id,
+        }
+        return True, datos_comentario, None
+    except Exception as exc:
+        session.rollback()
+        return False, None, str(exc)
+    finally:
+        session.close()
+            
+# Fin agregados tarea 3: Parte 2.
 
 
 def get_regions_for_form():
