@@ -75,7 +75,8 @@ Tendremos que agregar un nuevo bloque para cada una de las actividades que tenga
                         <input type="hidden" name="act_page" value="{{ m.actividades_page }}">
                         <button type="submit" class="btn-eliminar-actividad">Eliminar actividad</button>
                     </form>
-                    <button type="button" class="toggle-comments-btn" data-actividad="{{a.id}}">Ver comentarios: </button>
+                </article>
+                <button type="button" class="toggle-comments-btn" data-actividad="{{a.id}}">Ver comentarios: </button>
                     <div class="comments-panel hidden" id="comments-panel-{{a.id}}">
                         <button type="button" class="toggle-comments-btn"> Agregar un comentario </button>
                         <div>
@@ -85,7 +86,6 @@ Tendremos que agregar un nuevo bloque para cada una de las actividades que tenga
                             {%include 'read_comments.html' with context%}
                         </div>
                     </div>
-                </article>
                 {% endfor %}
             </div>
             {% if m.actividades_pages > 1 %}
