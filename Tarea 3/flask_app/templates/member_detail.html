@@ -75,6 +75,14 @@ Tendremos que agregar un nuevo bloque para cada una de las actividades que tenga
                         <input type="hidden" name="act_page" value="{{ m.actividades_page }}">
                         <button type="submit" class="btn-eliminar-actividad">Eliminar actividad</button>
                     </form>
+                    <button type="button" class="collapsible">Ver comentarios: </button>
+                        <div class="content">
+                            <button type="button" class="collapsible"> Agregar un comentario </button>
+                                <div>
+                                    {% include 'comment_form.html' with context %}
+                                </div>
+                            {%include 'read_comments.html' with context%}
+                        </div>
                 </article>
                 {% endfor %}
             </div>

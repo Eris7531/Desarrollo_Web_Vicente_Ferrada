@@ -331,16 +331,44 @@ def estadisticas():
 
 # Queremos crear una función para obtener los datos de la base de datos, específicamente para obtener los datos dentro de la tabala
 # 'comentario' dentro del schema 'tarea2'.
-@app.route("/miembros/comentario", methods=["GET"])
-def displayComentario():
-    return "ok"
+#@app.route("/miembros/comentario", methods=["GET"])
+#def displayComentario():
+#    return "ok"
+# Comentado por ahora: La función displayComentarios será reemplazada por los métodos 'fetch' o 'XMLHttpRequest' dentro del 
+# archivo JavaScript 'readComments.js', de modo de obtener los datos de la base de datos sin necesidad de recargar la página,
+# cumpliendo lo pedido por el enunciado.
+# Se repetirá el uso de esta lógica para obtener los datos de los miembros que subieron actividades junto a su región / comuna y 
+# tipo de actividad, para la creación de graficos de linea, torta y barra. Estos métodos de obtener la información de la base de 
+# datos usando 'fetch' o 'XMLHttpRequest' serán implementados dentro del archivo 'graphData.js' creado en la tarea 2.
+
 
 # En esta función queremos tomar un comentario ingreado en el formulario 'comment_form.html' y guardarlo en la base de datos,
 # específicamente en la tabla 'comentario' dentro del schema 'tarea2'. Para esto, debemos tomar el comentario ingresado, el id del 
 # miembro, y la fecha actual (al momento de hacer click sobre el botón de enviar comentario) y guardarlos en la base de datos.
-@app.route("/miembros/comentario/subirComentario", methods=["POST"])
-def subirComentario():
-    return "ok"
+#@app.route("/miembros/comentario/subirComentario", methods=["POST"])
+#def subirComentario():
+#    return "ok"
+# No seguro de si se mantendrá éste método o también se moverá a los archivos js.
+
+@app.route("/api/comentarios/<int:aid>", methods=["GET"])
+def get_comentarios_actividad(aid):
+    """Retorna comentarios para una actividad (GET asincrónico)"""
+    comentarios = dbm.get_comments_for_actividad_json(aid)
+    return {"comentarios": comentarios}
+
+@app.route("/api/comentarios", methods=["POST"])
+def crear_comentario():
+    """Crea un nuevo comentario (POST asincrónico)"""
+    data = request.get_json()
+    nombre = data.get("nombre")
+    texto = data.get("texto")
+    actividad_id = data.get("actividad_id")
+    
+    ok, datos, error = dbm.create_comentario(nombre, texto, actividad_id)
+    
+    if not ok:
+        return {"ok": False, "error": error}, 400
+    return {"ok": True, "comentario": datos}, 201
 
 if __name__ == "__main__":
     app.run(debug=True)

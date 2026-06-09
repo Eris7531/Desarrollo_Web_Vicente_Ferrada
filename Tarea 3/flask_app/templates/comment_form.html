@@ -30,7 +30,7 @@ tabla comentario.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <title>Registrar miembro y actividades</title> -->
-     <!-- Saltamos la mención del título, pues este formulario se encontrará dentro de la vista 'member_detail.html'-->
+    <!-- Saltamos la mención del título, pues este formulario se encontrará dentro de la vista 'member_detail.html'-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
@@ -55,7 +55,7 @@ tabla comentario.
 
         <!-- Solo se crean dos campos, pues este formulario solo requiere un nombre de usuario y el comentario en si. -->
         <nav class="navigation-container form-nav" aria-label="Crear_comentario">
-            <form name="combinedForm" method="post" enctype="multipart/form-data" action="{{ url_for('registro') }}" novalidate>
+            <form name="combinedForm" method="post" enctype="application/x-www-form-urlencoded" novalidate>
                 <h2 class="nombre_comentarista">Nombre del Comentarista</h2>
                 <label for="nombre">Nombre completo <span class="req">*</span></label>
                 <input type="text" name="nombre" id="nombre" minlength="3" maxlength="80" value="{{"<!-- Formula de validación nombre -->"}}">
@@ -71,8 +71,9 @@ tabla comentario.
                     required> {{ request.form.get('comentario', '') }}
                 </textarea>
                 {% if field_errors.get('comentario') %}<p class="field-error">{{ field_errors.comentarios }}</p>{% endif %}
-
-                <button type="submit">Subir Comentario</button> <!-- Falta crear la función que suba el contenido a la base de datos -->
+ 
+                <input type="hidden" name="actividad_id" value="{{a.id}}">
+                <button type="submit">Subir Comentario</button>
             </form>
             <!-- Debemos trabajar con esta sección internamente, de modo de que se comunique con el servidor, y que se valide nuevamente, de 
              modo de que se eviten inyecciónes maliciosas. -->
@@ -80,4 +81,12 @@ tabla comentario.
     </div>
 </body>
 <script src="{{ url_for('static', filename='js/commentForm.js') }}"></script> <!-- Se añade el script que se encargará de validar el formulario. -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('comentarioForm');
+  if (form) {
+    form.addEventListener('submit', handleCommentFormSubmit);
+  }
+});
+</script>
 </html>

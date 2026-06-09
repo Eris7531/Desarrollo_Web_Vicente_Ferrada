@@ -18,6 +18,8 @@ Tarea 3:
 
 Deciciones de diseño:
 
+**Sección planificación del Proyecto:**
+
 1. En la tarea 2, cuando uno quiere ver los detalles de una actividad de parte de un alumno, puede acceder desde el 'Listado de Miembros' o desde la Vista de inicio, en donde se muestran los últimos 5 usuarios que agregaron actividades y qué actividades tienen, al hacer click sobre la línea que tiene el usuario con la actividad que uno desea revisar en detalle. Esto te dirige a una página similar a un perfil, en donde uno puede ver los detalles del miembro y *todas* las *actividades* registradas a su nombre. 
 
 Esto se visualiza como bloques que contienen la información de la actividad. Al tener *múltiples* actividades dentro del perfil de un mismo usuario, agregar una caja de comentarios a cada actividad de un usuario agregaría demaciada información. Además, en caso de que una actividad tenga comentarios, la siguiente actividad dentro del perfil se vería deplazada más abajo, lo cual no es ideal visualmente.
@@ -48,3 +50,6 @@ Tras eso se agregarán los graficos que se piden en el enunciado:
     2) Bar Chart with Code: (https://www.highcharts.com/docs/chart-and-series-types/bar-chart)
     3) Line Chart with Code: (https://www.highcharts.com/docs/chart-and-series-types/line-chart)
 
+**Sección desarrollo del Proyecto:**
+
+1. *08/06:* Inicialmente se plenó crear dos nuevos templates para los comentarios, uno para el formulario que dejará al usuario agregar un comentario y otro para la visualización de los comentarios previamente agregados a una dada actividad. Estos serían *incluidos* dentro de el template previamente creado *'member_detail'* ya que ahí es donde se encontrarán los comentarios. En caso de ser complicado el paso de información desde un template a otro, simplemente se agregarán los contenidos de los templates, *'comment_form-html'* y *'read_comments-html'*, dento de *'member_detail.html'*, eliminando los previamente mencionados.

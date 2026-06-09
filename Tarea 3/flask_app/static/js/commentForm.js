@@ -9,19 +9,62 @@ const validateComment = (comment) => {
   los saltos de línea como caracteres.>
   */
   
-  if (!comment || typeof comment !== "text box") return false;
+  if (!comment || typeof comment !== "string") 
+    return false;
   const trimmed = comment.trim();
   return trimmed.length >= 1 && trimmed.length <= 500;
-
 };
-
-
 /*
 Esta validación debería estar correcta, pero revisar la sección que dice 'typeof name !== "string"'.
 */
 
-const validateCommentPosterName = () => {
-    if (!name || typeof name !== "string") return false;    
+const validateCommentPosterName = (name) => {
+    if (!name || typeof name !== "string") 
+      return false;    
     const trimmed = name.trim();
     return trimmed.length >= 3 && trimmed.length <= 80;
 };
+
+async function handleCommentFormSubmit(event) {
+  event.preventDefault();
+  
+  const form = event.target;
+  const nombre = form.querySelector('input[name="nombre"]').value;
+  const texto = form.querySelector('textarea[name="comentario"]').value;
+  const actividad_id = form.querySelector('input[name="actividad_id"]').value;
+  
+  // Validar
+  if (!validateCommentPosterName(nombre)) {
+    alert("Nombre debe tener entre 3 y 80 caracteres.");
+    return;
+  }
+  if (!validateComment(texto)) {
+    alert("Comentario debe tener entre 5 caracteres.");
+    return;
+  }
+  
+  // Enviar con fetch
+  try {
+    const response = await fetch('/api/comentarios', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre: nombre,
+        texto: texto,
+        actividad_id: parseInt(actividad_id)
+      })
+    });
+    
+    const data = await response.json();
+    if (!response.ok) {
+      alert("Error: " + (data.error || "No se pudo guardar"));
+      return;
+    }
+    
+    alert("Comentario agregado!");
+    form.reset();
+    // Aquí recargarías la lista de comentarios
+  } catch (error) {
+    alert("Error de conexión: " + error);
+  }
+}

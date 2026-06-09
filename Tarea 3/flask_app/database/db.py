@@ -178,7 +178,7 @@ class Comentario(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     comentarista_nombre = Column(String(255), nullable=False)
     comentario_texto = Column(Text, nullable=False)
-    fecha_comentario = Column(DateTime, nullable=False, default=datetime.now)
+    fecha_comentario = Column(DateTime, nullable=False, default=datetime.utcnow)
     actividad_id = Column(Integer, ForeignKey("actividad.id"), nullable=False)
 
     actividad = relationship("Actividad", back_populates="comentarios")
@@ -231,7 +231,7 @@ def create_comentario(comentarista_nombre, comentario_texto, actividad_id):
             comentarista_nombre=nombre_limpio,
             comentario_texto=texto_limpio,
             actividad_id=actividad_id,
-            fecha_comentario=datetime.utcnow(),
+            fecha_comentario=datetime.utcnow,
         )
         session.add(nuevo_comentario)
         session.commit()
