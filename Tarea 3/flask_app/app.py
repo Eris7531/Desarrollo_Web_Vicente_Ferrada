@@ -338,7 +338,7 @@ def getComentario():
 # En esta función queremos tomar un comentario ingreado en el formulario 'comment_form.html' y guardarlo en la base de datos,
 # específicamente en la tabla 'comentario' dentro del schema 'tarea2'. Para esto, debemos tomar el comentario ingresado, el id del 
 # miembro, y la fecha actual (al momento de hacer click sobre el botón de enviar comentario) y guardarlos en la base de datos.
-@app.reoute("/miembros/comentario/subirComentario", methods=["POST"])
+@app.route("/miembros/comentario/subirComentario", methods=["POST"])
 def subirComentario():
     return "ok"
 
