@@ -40,6 +40,10 @@ body {
     color: #222;
 }
 
+.hidden {
+  display: none;
+}
+
 .page-intro {
     text-align: center;
     color: #555;

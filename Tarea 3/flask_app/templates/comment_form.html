@@ -24,62 +24,53 @@ tabla comentario.
 
 -->
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>Registrar miembro y actividades</title> -->
-    <!-- Saltamos la mención del título, pues este formulario se encontrará dentro de la vista 'member_detail.html'-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <div class="main-container main-container--form-activity">
-        <div id="val-box" {% if not errors and not field_errors %}hidden{% endif %}>
-            <h2 id="val-msg">
-                {% if errors %}
-                {{ errors[0] }}
-                {% elif field_errors %}
-                Revise los campos indicados abajo.
-                {% else %}
-                Validación
-                {% endif %}
-            </h2>
-            <ul id="val-list">
-                {% for key, msg in field_errors.items() %}
-                <li><strong>{{ key }}</strong>: {{ msg }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <!-- Tampoco añadimos sección <header></header> pues se encuentra dentro de otra página ya existente.-->
 
-        <!-- Solo se crean dos campos, pues este formulario solo requiere un nombre de usuario y el comentario en si. -->
-        <nav class="navigation-container form-nav" aria-label="Crear_comentario">
-            <form name="combinedForm" method="post" enctype="application/x-www-form-urlencoded" novalidate>
-                <h2 class="nombre_comentarista">Nombre del Comentarista</h2>
-                <label for="nombre">Nombre completo <span class="req">*</span></label>
-                <input type="text" name="nombre" id="nombre" minlength="3" maxlength="80" value="{{"<!-- Formula de validación nombre -->"}}">
-                {% if field_errors.get('nombre_comentarista') %}<p class="field-error">{{ field_errors.nombre_comentarista }}</p>{% endif %}
-
-                <label for="texto_comentario">Contenido del Comentario <span class="req">*</span></label>
-                <textarea 
-                    id="texto_comentario" 
-                    name="comentario" 
-                    rows="4" 
-                    cols="50" 
-                    minlength="5" 
-                    required> {{ request.form.get('comentario', '') }}
-                </textarea>
-                {% if field_errors.get('comentario') %}<p class="field-error">{{ field_errors.comentarios }}</p>{% endif %}
- 
-                <input type="hidden" name="actividad_id" value="{{a.id}}">
-                <button type="submit">Subir Comentario</button>
-            </form>
-            <!-- Debemos trabajar con esta sección internamente, de modo de que se comunique con el servidor, y que se valide nuevamente, de 
-             modo de que se eviten inyecciónes maliciosas. -->
-        </nav> 
+<div class="main-container main-container--form-activity">
+    <div id="val-box" {% if not errors and not field_errors %}hidden{% endif %}>
+        <h2 id="val-msg">
+            {% if errors %}
+            {{ errors[0] }}
+            {% elif field_errors %}
+            Revise los campos indicados abajo.
+            {% else %}
+            Validación
+            {% endif %}
+        </h2>
+        <ul id="val-list">
+            {% for key, msg in field_errors.items() %}
+            <li><strong>{{ key }}</strong>: {{ msg }}</li>
+            {% endfor %}
+        </ul>
     </div>
-</body>
+    <!-- Tampoco añadimos sección <header></header> pues se encuentra dentro de otra página ya existente.-->
+
+    <!-- Solo se crean dos campos, pues este formulario solo requiere un nombre de usuario y el comentario en si. -->
+    <nav class="navigation-container form-nav" aria-label="Crear_comentario">
+        <form name="combinedForm" method="post" enctype="application/x-www-form-urlencoded" novalidate>
+            <h2 class="nombre_comentarista">Nombre del Comentarista</h2>
+            <label for="nombre">Nombre completo <span class="req">*</span></label>
+            <input type="text" name="nombre" id="nombre" minlength="3" maxlength="80" value="{{"<!-- Formula de validación nombre -->"}}">
+            {% if field_errors.get('nombre_comentarista') %}<p class="field-error">{{ field_errors.nombre_comentarista }}</p>{% endif %}
+
+            <label for="texto_comentario">Contenido del Comentario <span class="req">*</span></label>
+            <textarea 
+                id="texto_comentario" 
+                name="comentario" 
+                rows="4" 
+                cols="50" 
+                minlength="5" 
+                required> {{ request.form.get('comentario', '') }}
+            </textarea>
+            {% if field_errors.get('comentario') %}<p class="field-error">{{ field_errors.comentarios }}</p>{% endif %}
+ 
+            <input type="hidden" name="actividad_id" value="{{a.id}}">
+            <button type="submit">Subir Comentario</button>
+        </form>
+        <!-- Debemos trabajar con esta sección internamente, de modo de que se comunique con el servidor, y que se valide nuevamente, de 
+         modo de que se eviten inyecciónes maliciosas. -->
+    </nav> 
+</div>
+
 <script src="{{ url_for('static', filename='js/commentForm.js') }}"></script> <!-- Se añade el script que se encargará de validar el formulario. -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
