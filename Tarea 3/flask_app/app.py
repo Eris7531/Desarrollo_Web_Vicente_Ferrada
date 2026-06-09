@@ -329,6 +329,19 @@ def estadisticas():
     chart_stats = dbm.get_chart_stats_payload()
     return render_template("graph_stats.html", chart_stats=chart_stats)
 
+# Queremos crear una función para obtener los datos de la base de datos, específicamente para obtener los datos dentro de la tabala
+# 'comentario' dentro del schema 'tarea2'.
+@app.route("/miembros/comentario", methods=["GET"])
+def getComentario():
+    return "ok"
+
+# En esta función queremos tomar un comentario ingreado en el formulario 'comment_form.html' y guardarlo en la base de datos,
+# específicamente en la tabla 'comentario' dentro del schema 'tarea2'. Para esto, debemos tomar el comentario ingresado, el id del 
+# miembro, y la fecha actual (al momento de hacer click sobre el botón de enviar comentario) y guardarlos en la base de datos.
+@app.reoute("/miembros/comentario/subirComentario", methods=["POST"])
+def subirComentario():
+    return "ok"
+
 
 if __name__ == "__main__":
     app.run(debug=True)

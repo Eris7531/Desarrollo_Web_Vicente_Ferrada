@@ -47,3 +47,4 @@ Tras eso se agregarán los graficos que se piden en el enunciado:
     1) Pie Chart with Code: (https://www.highcharts.com/docs/chart-and-series-types/pie-chart)
     2) Bar Chart with Code: (https://www.highcharts.com/docs/chart-and-series-types/bar-chart)
     3) Line Chart with Code: (https://www.highcharts.com/docs/chart-and-series-types/line-chart)
+
