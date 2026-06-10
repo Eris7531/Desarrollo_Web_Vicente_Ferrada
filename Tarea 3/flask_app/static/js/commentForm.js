@@ -62,6 +62,9 @@ async function handleCommentFormSubmit(event) {
     }
     
     alert("Comentario agregado!");
+    if (window.loadCommentsForActividad) {
+      window.loadCommentsForActividad(parseInt(actividad_id, 10));
+    };
     form.reset();
     // Aquí recargarías la lista de comentarios
   } catch (error) {

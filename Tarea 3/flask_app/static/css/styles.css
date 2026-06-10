@@ -537,3 +537,32 @@ a.nav-btn {
         font-size: 0.8rem;
     }
 }
+
+.comment-card {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 14px;
+  background: #fff;
+  max-width: fit-content;
+}
+
+.comment-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.comment-text {
+  width: 100%;
+  resize: none;
+  font-family: inherit;
+  line-height: 1.2rem;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+}

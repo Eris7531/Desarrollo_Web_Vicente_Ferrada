@@ -16,8 +16,33 @@ que usted decida.
 
 
 -->
-<section class="detail-block" aria-labelledby="member-data-heading">
-    <h2></h2>
-</section>
 
-<script src="{{ url_for('static', filename='js/readComments.js') }}"></script>
+<section class="detail-block comments-block" aria-labelledby="comments-heading-{{ a.id }}">
+  <div class="comments-header">
+    <button type="button" class="toggle-add-comment-btn" data-actividad-id="{{ a.id }}">
+      Comentar
+    </button>
+
+    <div class="comments-order-group">
+      <span id="comments-count-{{ a.id }}" class="comments-count">0 comentarios</span>
+      <label for="comments-order-{{ a.id }}">Ordenar:</label>
+      <select id="comments-order-{{ a.id }}" class="comments-order-select" data-actividad="{{ a.id }}">
+        <option value="desc" selected>Más recientes</option>
+        <option value="asc">Más antiguos</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="comments-list" id="comments-list-{{ a.id }}" data-actividad-id="{{ a.id }}">
+    <!-- Aquí cargará el listado de comentarios -->
+  </div>
+
+  <div class="comments-actions">
+    <button type="button" class="load-more-comments-btn" data-actividad="{{ a.id }}" disabled>
+      Cargar 5 comentarios más
+    </button>
+    <button type="button" class="hide-comments-btn" data-actividad="{{ a.id }}">
+      Ocultar todos los comentarios
+    </button>
+  </div>
+</section>

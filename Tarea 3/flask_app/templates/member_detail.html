@@ -76,16 +76,11 @@ Tendremos que agregar un nuevo bloque para cada una de las actividades que tenga
                         <button type="submit" class="btn-eliminar-actividad">Eliminar actividad</button>
                     </form>
                 </article>
-                <button type="button" class="toggle-comments-btn" data-actividad="{{a.id}}">Ver comentarios: </button>
-                    <div class="comments-panel hidden" id="comments-panel-{{a.id}}">
-                        <button type="button" class="toggle-comments-btn"> Agregar un comentario </button>
-                        <div>
-                            {% include 'comment_form.html' with context %}
-                        </div>
-                        <div>
-                            {%include 'read_comments.html' with context%}
-                        </div>
-                    </div>
+                <button type="button" class="toggle-comments-btn" data-actividad-id="{{ a.id }}">Ver comentarios</button>
+                <div class="comments-panel hidden" id="comments-panel-{{ a.id }}">
+                    <div> {% include 'comment_form.html' with context %} </div>
+                    <div> {% include 'read_comments.html' with context %} </div>
+                </div>
                 {% endfor %}
             </div>
             {% if m.actividades_pages > 1 %}
@@ -111,4 +106,7 @@ Tendremos que agregar un nuevo bloque para cada una de las actividades que tenga
         </nav>
     </div>
 </body>
+<script src="{{ url_for('static', filename='js/toggleComments.js') }}"></script>
+<script src="{{ url_for('static', filename='js/readComments.js') }}"></script>
+<script src="{{ url_for('static', filename='js/commentForm.js') }}"></script>
 </html>

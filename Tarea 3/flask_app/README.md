@@ -56,4 +56,6 @@ Tras eso se agregarán los graficos que se piden en el enunciado:
 
 *09/06:* Se logró medianamente la implementación de *templates html* dentro de otro template, por lo que se va a mantener el uso de este método. Solo falta pulir detalles de esta estructura.
 
-2. 
+2. *10/06:* Se decidió establecer un límite de carga de 5 comentarios iniciales por actividad e implementar un botón que permita cargar los siguientes 5. Además poder ordenar los comentarios por fecha. Por simplicidad, no se considera la opción de interactuar con otros comentarios, ej: responder a comentarios previamente existenes, además de que no es requisito de la tarea. 
+
+Para poder ordenar los comentarios se agregaron las funciones necesarias relacionadas dentro de el archivo js que maneja todo lo relacionado a la carga de comentarios, readComments.js.
