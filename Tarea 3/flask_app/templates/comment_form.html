@@ -49,7 +49,7 @@ tabla comentario.
         <form id="comentarioForm" name="combinedForm" method="post" enctype="application/x-www-form-urlencoded" novalidate>
             <h2 class="nombre_comentarista">Nombre del Comentarista</h2>
             <label for="nombre">Nombre completo <span class="req">*</span></label>
-            <input type="text" name="nombre" id="nombre" minlength="3" maxlength="80" value="{{"Nombre del Comentarista"}}">
+            <input type="text" name="nombre" id="nombre" minlength="3" maxlength="80">
             {% if field_errors.get('nombre_comentarista') %}<p class="field-error">{{ field_errors.nombre_comentarista }}</p>{% endif %}
 
             <label for="texto_comentario">Contenido del Comentario <span class="req">*</span></label>

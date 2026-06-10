@@ -26,7 +26,7 @@ que usted decida.
     <div class="comments-order-group">
       <span id="comments-count-{{ a.id }}" class="comments-count">0 comentarios</span>
       <label for="comments-order-{{ a.id }}">Ordenar:</label>
-      <select id="comments-order-{{ a.id }}" class="comments-order-select" data-actividad="{{ a.id }}">
+      <select id="comments-order-{{ a.id }}" class="comments-order-select" data-actividad-id="{{ a.id }}">
         <option value="desc" selected>Más recientes</option>
         <option value="asc">Más antiguos</option>
       </select>
@@ -38,10 +38,10 @@ que usted decida.
   </div>
 
   <div class="comments-actions">
-    <button type="button" class="load-more-comments-btn" data-actividad="{{ a.id }}" disabled>
+    <button type="button" class="load-more-comments-btn" data-actividad-id="{{ a.id }}" disabled>
       Cargar 5 comentarios más
     </button>
-    <button type="button" class="hide-comments-btn" data-actividad="{{ a.id }}">
+    <button type="button" class="hide-comments-btn" data-actividad-id="{{ a.id }}">
       Ocultar todos los comentarios
     </button>
   </div>

@@ -78,8 +78,12 @@ Tendremos que agregar un nuevo bloque para cada una de las actividades que tenga
                 </article>
                 <button type="button" class="toggle-comments-btn" data-actividad-id="{{ a.id }}">Ver comentarios</button>
                 <div class="comments-panel hidden" id="comments-panel-{{ a.id }}">
-                    <div> {% include 'comment_form.html' with context %} </div>
-                    <div> {% include 'read_comments.html' with context %} </div>
+                    <div class="comment-form-section hidden" id="comment-form-section-{{ a.id }}">
+                        {% include 'comment_form.html' with context %} 
+                    </div>
+                    <div> 
+                        {% include 'read_comments.html' with context %} 
+                    </div>
                 </div>
                 {% endfor %}
             </div>

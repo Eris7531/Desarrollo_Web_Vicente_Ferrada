@@ -70,7 +70,7 @@ function updateCommentsCount(actividadId) {
 
 function updateLoadMoreButton(actividadId) {
   const state = commentState[actividadId];
-  const btn = document.querySelector(`.load-more-comments-btn[data-actividad="${actividadId}"]`);
+  const btn = document.querySelector(`.load-more-comments-btn[data-actividad-id="${actividadId}"]`);
   if (!btn) return;
   btn.disabled = state.visibleCount >= state.comments.length;
   btn.textContent = state.visibleCount >= state.comments.length
@@ -119,13 +119,27 @@ async function loadCommentsForActividad(actividadId) {
 function hideComments(actividadId) {
   const list = document.getElementById(`comments-list-${actividadId}`);
   if (list) list.innerHTML = "";
-  const btn = document.querySelector(`.load-more-comments-btn[data-actividad="${actividadId}"]`);
+  const btn = document.querySelector(`.load-more-comments-btn[data-actividad-id="${actividadId}"]`);
   if (btn) btn.disabled = true;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Toggle del botón "Comentar"
+  document.querySelectorAll(".toggle-add-comment-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      const actividadId = button.dataset.actividadId;
+      const formSection = document.getElementById(`comment-form-section-${actividadId}`);
+      if (!formSection) return;
+      formSection.classList.toggle("hidden");
+      button.textContent = formSection.classList.contains("hidden")
+        ? "Comentar"
+        : "Ocultar formulario";
+    });
+  });
+
+  // Orden de comentarios
   document.querySelectorAll(".comments-order-select").forEach((select) => {
-    const actividadId = select.dataset.actividad;
+    const actividadId = select.dataset.actividadId;
     if (!actividadId) return;
     select.addEventListener("change", () => {
       const state = ensureCommentState(actividadId);
@@ -134,24 +148,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Cargar más comentarios
   document.querySelectorAll(".load-more-comments-btn").forEach((button) => {
     button.addEventListener("click", () => {
-      const actividadId = button.dataset.actividad;
+      const actividadId = button.dataset.actividadId;
       const state = ensureCommentState(actividadId);
       state.visibleCount += COMMENT_BATCH_SIZE;
       renderCommentList(actividadId);
     });
   });
 
+  // Ocultar todos los comentarios
   document.querySelectorAll(".hide-comments-btn").forEach((button) => {
     button.addEventListener("click", () => {
-      const actividadId = button.dataset.actividad;
+      const actividadId = button.dataset.actividadId;
       hideComments(actividadId);
     });
   });
 
+  // Cargar comentarios al iniciar
   document.querySelectorAll(".comments-list").forEach((list) => {
-    const actividadId = list.dataset.actividad;
+    const actividadId = list.dataset.actividadId;
     if (actividadId) loadCommentsForActividad(actividadId);
   });
 });
