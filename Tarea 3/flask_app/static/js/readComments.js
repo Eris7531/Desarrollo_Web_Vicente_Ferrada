@@ -31,10 +31,22 @@ function createCommentCard(comment) {
 
   const meta = document.createElement("div");
   meta.className = "comment-meta";
+  const author = document.createElement("span");
+  author.className = "comment-author";
+  author.textContent = comment.nombre;
+
+  const date = document.createElement("span");
+  date.className = "comment-date";
+  date.textContent = formatCommentDate(comment.fecha);
+
+  meta.appendChild(author);
+  meta.appendChild(date);
+  /*
   meta.innerHTML = `
     <span class="comment-author">${comment.nombre}</span>
     <span class="comment-date">${formatCommentDate(comment.fecha)}</span>
   `;
+  */
   card.appendChild(meta);
 
   const texto = document.createElement("textarea");

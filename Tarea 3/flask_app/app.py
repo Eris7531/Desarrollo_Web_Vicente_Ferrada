@@ -347,9 +347,21 @@ def get_comentarios_actividad(aid):
 def crear_comentario():
     """Crea un nuevo comentario (POST asincrónico)"""
     data = request.get_json()
+    if not data:
+        return {"ok": False, "error": "JSON inválido"}, 400
+    
     nombre = data.get("nombre")
     texto = data.get("texto")
+    
     actividad_id = data.get("actividad_id")
+    
+    if not isinstance(nombre, str) or not isinstance(texto, str):
+        return {"ok": False, "error": "Datos inválidos"}, 400
+
+    try:
+        actividad_id = int(actividad_id)
+    except (TypeError, ValueError):
+        return {"ok": False, "error": "actividad_id inválido"}, 400
     
     ok, datos, error = dbm.create_comentario(nombre, texto, actividad_id)
     

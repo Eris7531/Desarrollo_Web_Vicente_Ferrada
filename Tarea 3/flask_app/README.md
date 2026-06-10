@@ -61,3 +61,9 @@ Tras eso se agregarán los graficos que se piden en el enunciado:
 Para poder ordenar los comentarios se agregaron las funciones necesarias relacionadas dentro de el archivo js que maneja todo lo relacionado a la carga de comentarios, readComments.js.
 
 3. *10/06:* Dentro de las validaciones de comentario, en la sección 'nombre del comentarista' en particular, no se va a pedir que sea un miembro, por lo que las validaciones solamente serán relacionadas al largo del texto ingresado; 3 =< len =< 80.
+
+4. *10/06:* En la caja de comentarios, el usuario puede seleccionar el orden de ver los comentarios por fecha de publicación, con opción de ver desde los más antijuos o desde los más recientes.
+
+Finalmente, se añadió un botón que colapsa todos los comantarios. Si se interactúa con el botón (mostrar 5 comentarios más) muchas veces, volver al inicio de la caja de comentarios es una lata, por lo que colapsar todos facilita esto.
+
+Se consideró implementar una flecha que the lleve al inicio de la caja de comentarios, pero se optó por la opción anterior ya que es similar a lo implementado en la lista de miembros, con páginas de 5 máximo.

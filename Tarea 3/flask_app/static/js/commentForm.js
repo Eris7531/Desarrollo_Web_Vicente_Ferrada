@@ -12,7 +12,7 @@ const validateComment = (comment) => {
   if (!comment || typeof comment !== "string") 
     return false;
   const trimmed = comment.trim();
-  return trimmed.length >= 1 && trimmed.length <= 500;
+  return trimmed.length >= 5 && trimmed.length <= 300;
 };
 /*
 Esta validación debería estar correcta, pero revisar la sección que dice 'typeof name !== "string"'.

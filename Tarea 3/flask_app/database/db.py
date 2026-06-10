@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import os
 import unicodedata
 
@@ -12,6 +12,7 @@ from sqlalchemy import (
     create_engine,
     func,
 )
+
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
 DB_NAME = "tarea2"
@@ -117,7 +118,7 @@ class Miembro(Base):
     nombre = Column(String(255), nullable=False)
     email = Column(String(80), nullable=False)
     telefono = Column(String(15), nullable=False)
-    fecha_registro = Column(DateTime, nullable=False, default=datetime.utcnow)
+    fecha_registro = Column(DateTime, nullable=False, default=datetime.now(timezone(timedelta(hours=-4))))
     comuna_id = Column(Integer, ForeignKey("comuna.id"), nullable=False)
 
     comuna = relationship("Comuna", back_populates="miembros")
@@ -178,7 +179,7 @@ class Comentario(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     comentarista_nombre = Column("nombre", String(80), nullable=False)
     comentario_texto = Column("texto", Text, nullable=False)
-    fecha_comentario = Column("fecha", DateTime, nullable=False, default=datetime.utcnow)
+    fecha_comentario = Column("fecha", DateTime, nullable=False, default=datetime.now(timezone(timedelta(hours=-4))))
     actividad_id = Column(Integer, ForeignKey("actividad.id"), nullable=False)
 
     actividad = relationship("Actividad", back_populates="comentarios")
@@ -231,7 +232,7 @@ def create_comentario(comentarista_nombre, comentario_texto, actividad_id):
             comentarista_nombre=nombre_limpio,
             comentario_texto=texto_limpio,
             actividad_id=actividad_id,
-            fecha_comentario=datetime.utcnow(),
+            fecha_comentario=datetime.now(timezone(timedelta(hours=-4))),
         )
         session.add(nuevo_comentario)
         session.commit()
@@ -634,7 +635,7 @@ def create_miembro_actividades_fotos(
                 nombre=nombre,
                 email=email,
                 telefono=telefono,
-                fecha_registro=datetime.utcnow(),
+                fecha_registro=datetime.now(timezone(timedelta(hours=-4))),
                 comuna_id=comuna_id,
             )
             session.add(m)
