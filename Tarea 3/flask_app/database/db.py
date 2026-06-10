@@ -357,6 +357,26 @@ def get_last_miembros(limit=5):
     finally:
         session.close()
 
+from sqlalchemy import func
+
+def get_miembros_por_dia():
+    session = SessionLocal()
+    try:
+        rows = (
+            session.query(
+                func.date(Miembro.fecha_registro).label("fecha"),
+                func.count(Miembro.id).label("cantidad"),
+            )
+            .group_by(func.date(Miembro.fecha_registro))
+            .order_by(func.date(Miembro.fecha_registro))
+            .all()
+        )
+        return [
+            {"fecha": row.fecha.isoformat(), "cantidad": int(row.cantidad)}
+            for row in rows
+        ]
+    finally:
+        session.close()
 
 def actividades_resumen_publico(miembro_id):
     session = SessionLocal()

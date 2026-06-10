@@ -335,7 +335,7 @@ def estadisticas():
     chart_stats = dbm.get_chart_stats_payload()
     return render_template("graph_stats.html", chart_stats=chart_stats)
 
-# Inicio Adiciones tarea 3: endpoints para comentarios.
+# Inicio Adiciones tarea 3: Sección Comentarios.
 
 @app.route("/api/comentarios/<int:aid>", methods=["GET"])
 def get_comentarios_actividad(aid):
@@ -369,7 +369,26 @@ def crear_comentario():
         return {"ok": False, "error": error}, 400
     return {"ok": True, "comentario": datos}, 201
 
-# Fin Adiciones tarea 3.
+# Fin Adiciones tarea 3 : Sección Comentarios.
+
+# Inicio Adiciones tarea 3 : Sección Gráficos.
+
+@app.route("/api/estadisticas/miembros-por-dia", methods=["GET"])
+def get_miembros_por_dia():
+    datos = dbm.get_miembros_por_dia()
+    return {"datos" : datos}
+
+@app.route("/api/estadisticas/actividades-por-comuna", methods=["GET"])
+def get_actividades_por_comuna():
+    datos = dbm.get_actividades_por_comuna()
+    return {"datos" : datos}
+
+@app.route("/api/estadisticas/actividades-por-tipo", methods=["GET"])
+def get_actividades_por_tipo():
+    datos = dbm.get_actividades_por_tipo()
+    return {"datos" : datos}
+
+# Fin Adiciones tarea 3 : Sección Gráficos.
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -139,4 +139,34 @@ function init() {
   }
 }
 
+
+/* Inicio Adiciones Tarea 3: */
+
+/* Gráfico Miembros Registrados por Día */
+
+async function cargarMiembrosPorDia() {
+  try {
+    const response = await fetch("/api/estadisticas/miembros-por-dia");
+    if (!response.ok) throw new Error(response.statusText);
+    const data = await response.json();
+    return data.datos; // [{fecha: "...", cantidad: 5}, ...]
+  } catch (error) {
+    console.error("Error fetching Miembros Registrados por Día", error);
+    return [];
+  }
+}
+
+cargarMiembrosPorDia().then(datos => {
+  // construir gráfico aquí
+  console.log(datos);
+});
+
+
+/* Gráfico Actividades por Tipo*/
+
+/* Gráfico Actividades por Comuna*/
+
+
+/* Fin Adiciones Tarea 3L*/
+
 document.addEventListener("DOMContentLoaded", init);
