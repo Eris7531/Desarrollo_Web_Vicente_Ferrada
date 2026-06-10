@@ -72,6 +72,6 @@ Se consideró implementar una flecha que the lleve al inicio de la caja de comen
 
 *-- Sección Gráficos --*
 
-1. *10/06:* 
+1. *10/06:* El proceso de obtener los datos desde la base de datos se adiere al proceso típico de definir la función que hace un query en el lado servidor con db.py, y luego un archivo javascript solicita los datos para crear los gráficos en el lado del usuario/browser utilizando métodos como fetch y XHR asíncronos.
 
 2. B

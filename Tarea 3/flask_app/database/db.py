@@ -359,6 +359,8 @@ def get_last_miembros(limit=5):
 
 from sqlalchemy import func
 
+# Inicio Agregados Tarea 3 : Sección Gráficos.
+
 def get_miembros_por_dia():
     session = SessionLocal()
     try:
@@ -377,6 +379,54 @@ def get_miembros_por_dia():
         ]
     finally:
         session.close()
+        
+        
+def get_actividades_por_comuna():
+    session = SessionLocal()
+    try:
+        rows = (
+            session.query(
+                Comuna.nombre.label("comuna"),
+                Region.nombre.label("region"),
+                func.count(Actividad.id).label("cantidad"),
+            )
+            .join(Miembro, Actividad.miembro_id == Miembro.id)
+            .join(Comuna, Miembro.comuna_id == Comuna.id)
+            .join(Region, Comuna.region_id == Region.id)
+            .group_by(Comuna.id, Comuna.nombre, Region.nombre)
+            .order_by(Region.nombre, Comuna.nombre)
+            .all()
+        )
+        return [
+            {"comuna": row.comuna, "region": row.region, "cantidad": int(row.cantidad)}
+            for row in rows
+        ]
+    finally:
+        session.close()
+        
+
+def get_actividades_por_tipo():
+    session = SessionLocal()
+    try:
+        rows = (
+            session.query(
+                Actividad.tipo.label("tipo"),
+                func.count(Actividad.id).label("cantidad"),
+            )
+            .group_by(Actividad.tipo)
+            .order_by(Actividad.tipo)
+            .all()
+        )
+        return [
+            {"tipo" : row.tipo, "cantidad" : int(row.cantidad)}
+            for row in rows
+        ]
+    finally:
+        session.close()
+        
+        
+        
+# Fin Agregados Tarea 3 : Sección Gráficos.
 
 def actividades_resumen_publico(miembro_id):
     session = SessionLocal()

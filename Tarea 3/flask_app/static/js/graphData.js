@@ -151,7 +151,7 @@ async function cargarMiembrosPorDia() {
     const data = await response.json();
     return data.datos; // [{fecha: "...", cantidad: 5}, ...]
   } catch (error) {
-    console.error("Error fetching Miembros Registrados por Día", error);
+    console.error("Error fetching Datos de Miembros por Fecha de Registro", error);
     return [];
   }
 }
@@ -164,8 +164,39 @@ cargarMiembrosPorDia().then(datos => {
 
 /* Gráfico Actividades por Tipo*/
 
+async function cargarActividadesPorTipo() {
+  try {
+    const response = await fetch("/api/estadisticas/actividades-por-tipo");
+    if (!responde.ok) throw new Error(response.status);
+    const data = await response.json();
+  } catch (error) {
+    console.error("Error fetching Datos de Actividades por Tipo", error);
+    return [];
+  }
+}
+
+cargarActividadesPorTipo().then(datos => {
+  // construir gráfico aquí
+  console.log(datos);
+});
+
 /* Gráfico Actividades por Comuna*/
 
+async function cargarActividadesPorComuna() {
+  try {
+    const response = await fetch("/api/estadisticas/actividades-por-comuna");
+    if (!responde.ok) throw new Error(response.status);
+    const data = await response.json();
+  } catch (error) {
+    console.error("Error fetching Datos de Actividades por Comuna", error);
+    return [];
+  }
+}
+
+cargarActividadesPorComuna().then(datos => {
+  // construir gráfico aquí
+  console.log(datos);
+});
 
 /* Fin Adiciones Tarea 3L*/
 
