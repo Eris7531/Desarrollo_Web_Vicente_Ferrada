@@ -357,11 +357,6 @@ def crear_comentario():
         return {"ok": False, "error": error}, 400
     return {"ok": True, "comentario": datos}, 201
 
-@app.route("/api/comentarios/<int:aid>", methods=["GET"])
-def get_comentarios_actividad(aid):
-    comentarios = dbm.get_comments_for_actividad_json(aid)
-    return {"comentarios": comentarios}
-
 # Fin Adiciones tarea 3.
 
 if __name__ == "__main__":
