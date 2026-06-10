@@ -176,9 +176,9 @@ class Comentario(Base):
     __tablename__ = "comentario"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    comentarista_nombre = Column(String(255), nullable=False)
-    comentario_texto = Column(Text, nullable=False)
-    fecha_comentario = Column(DateTime, nullable=False, default=datetime.utcnow)
+    comentarista_nombre = Column("nombre", String(80), nullable=False)
+    comentario_texto = Column("texto", Text, nullable=False)
+    fecha_comentario = Column("fecha", DateTime, nullable=False, default=datetime.utcnow)
     actividad_id = Column(Integer, ForeignKey("actividad.id"), nullable=False)
 
     actividad = relationship("Actividad", back_populates="comentarios")
@@ -202,7 +202,7 @@ def get_comments_for_actividad_json(actividad_id):
             {
                 "id": c.id,
                 "nombre": c.comentarista_nombre,
-                "texto": c.comentario_texto,
+                "texto": c.comentario_texto, 
                 "fecha": c.fecha_comentario.isoformat() if c.fecha_comentario else None,
                 "actividad_id": c.actividad_id,
             }
@@ -216,12 +216,12 @@ def create_comentario(comentarista_nombre, comentario_texto, actividad_id):
     session = SessionLocal()
     try:
         nombre_limpio = (comentarista_nombre or "").strip()
-        if len(nombre_limpio) < 3 or len(nombre_limpio) > 255:
-            return False, None, "Nombre debe tener entre 3 y 255 caracteres."
+        if len(nombre_limpio) < 3 or len(nombre_limpio) > 80:
+            return False, None, "Nombre debe tener entre 3 y 80 caracteres."
 
         texto_limpio = (comentario_texto or "").strip()
-        if len(texto_limpio) < 5:
-            return False, None, "Comentario debe tener al menos 5 caracteres."
+        if len(texto_limpio) < 5 or len(texto_limpio) > 300:
+            return False, None, "Comentario debe tener entre 5 y 300 caracteres."
 
         act = session.query(Actividad).filter_by(id=actividad_id).first()
         if not act:
@@ -231,7 +231,7 @@ def create_comentario(comentarista_nombre, comentario_texto, actividad_id):
             comentarista_nombre=nombre_limpio,
             comentario_texto=texto_limpio,
             actividad_id=actividad_id,
-            fecha_comentario=datetime.utcnow,
+            fecha_comentario=datetime.utcnow(),
         )
         session.add(nuevo_comentario)
         session.commit()
@@ -240,7 +240,7 @@ def create_comentario(comentarista_nombre, comentario_texto, actividad_id):
             "id": nuevo_comentario.id,
             "nombre": nuevo_comentario.comentarista_nombre,
             "texto": nuevo_comentario.comentario_texto,
-            "fecha": nuevo_comentario.fecha_comentario.isoformat(),
+            "fecha": nuevo_comentario.fecha_comentario.isoformat() if nuevo_comentario.fecha_comentario else None,
             "actividad_id": nuevo_comentario.actividad_id,
         }
         return True, datos_comentario, None

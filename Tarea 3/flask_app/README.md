@@ -59,3 +59,5 @@ Tras eso se agregarán los graficos que se piden en el enunciado:
 2. *10/06:* Se decidió establecer un límite de carga de 5 comentarios iniciales por actividad e implementar un botón que permita cargar los siguientes 5. Además poder ordenar los comentarios por fecha. Por simplicidad, no se considera la opción de interactuar con otros comentarios, ej: responder a comentarios previamente existenes, además de que no es requisito de la tarea. 
 
 Para poder ordenar los comentarios se agregaron las funciones necesarias relacionadas dentro de el archivo js que maneja todo lo relacionado a la carga de comentarios, readComments.js.
+
+3. *10/06:* Dentro de las validaciones de comentario, en la sección 'nombre del comentarista' en particular, no se va a pedir que sea un miembro, por lo que las validaciones solamente serán relacionadas al largo del texto ingresado; 3 =< len =< 80.
