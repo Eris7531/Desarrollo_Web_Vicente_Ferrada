@@ -53,3 +53,7 @@ Tras eso se agregarán los graficos que se piden en el enunciado:
 **Sección desarrollo del Proyecto:**
 
 1. *08/06:* Inicialmente se plenó crear dos nuevos templates para los comentarios, uno para el formulario que dejará al usuario agregar un comentario y otro para la visualización de los comentarios previamente agregados a una dada actividad. Estos serían *incluidos* dentro de el template previamente creado *'member_detail'* ya que ahí es donde se encontrarán los comentarios. En caso de ser complicado el paso de información desde un template a otro, simplemente se agregarán los contenidos de los templates, *'comment_form-html'* y *'read_comments-html'*, dento de *'member_detail.html'*, eliminando los previamente mencionados.
+
+*09/06:* Se logró medianamente la implementación de *templates html* dentro de otro template, por lo que se va a mantener el uso de este método. Solo falta pulir detalles de esta estructura.
+
+2. 
