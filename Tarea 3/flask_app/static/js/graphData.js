@@ -149,7 +149,7 @@ async function cargarMiembrosPorDia() {
     const response = await fetch("/api/estadisticas/miembros-por-dia");
     if (!response.ok) throw new Error(response.statusText);
     const data = await response.json();
-    return data.datos; // [{fecha: "...", cantidad: 5}, ...]
+    return data.datos || data || [];
   } catch (error) {
     console.error("Error fetching Datos de Miembros por Fecha de Registro", error);
     return [];
@@ -157,8 +157,23 @@ async function cargarMiembrosPorDia() {
 }
 
 cargarMiembrosPorDia().then(datos => {
-  // construir gráfico aquí
-  console.log(datos);
+  const seriesData = datos.map(d => ({
+    x: Date.parse(d.fecha),
+    y: Number(d.cantidad ?? d.valor ?? 0)
+  }));
+
+  Highcharts.chart('line_container', {
+    chart: { type: 'line' },
+    title: { text: 'Miembros Registrados por Día' },
+    xAxis: { type: 'datetime' },
+    yAxis: { title: { text: 'Número de registros' } },
+    tooltip: {
+      xDateFormat: '%Y-%m-%d',
+      pointFormat: '{point.y} registros'
+    },
+    series: [{ name: 'Registros', data: seriesData }]
+  });
+  console.log(datos)
 });
 
 
@@ -167,16 +182,55 @@ cargarMiembrosPorDia().then(datos => {
 async function cargarActividadesPorTipo() {
   try {
     const response = await fetch("/api/estadisticas/actividades-por-tipo");
-    if (!responde.ok) throw new Error(response.status);
+    if (!response.ok) throw new Error(response.statusText);
     const data = await response.json();
+    return data.datos || data || [];
   } catch (error) {
     console.error("Error fetching Datos de Actividades por Tipo", error);
     return [];
   }
 }
-
 cargarActividadesPorTipo().then(datos => {
-  // construir gráfico aquí
+  const seriesData = (datos || []).map(d => ({
+    name: d.tipo || d.nombre || d.etiqueta || 'Sin nombre',
+    y: Number(d.cantidad ?? d.valor ?? 0),
+    color: d.color
+  }));
+  Highcharts.chart('pie_container', {
+    chart: { type: 'pie' },
+    title: { text: 'Cantidad de Actividades de cada Tipo' },
+    tooltip: { pointFormat: '{point.y} ({point.percentage:.1f}%)' },
+    subtitle: { text: 'Source: Me inventé los datos' },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: [{
+          enabled: true,
+          distance: 20
+        }, {
+          enabled: true,
+          distance: -40,
+          format: '{point.percentage:.1f}%',
+          style: {
+            fontSize: '1.2em',
+            textOutline: 'none',
+            opacity: 0.7
+          },
+          filter: {
+            operator: '>',
+            property: 'percentage',
+            value: 10
+          }
+        }]
+      }
+    },
+    series: [{
+      name: 'Cantidad',
+      colorByPoint: true,
+      data: seriesData
+    }]
+  });
   console.log(datos);
 });
 
@@ -185,8 +239,9 @@ cargarActividadesPorTipo().then(datos => {
 async function cargarActividadesPorComuna() {
   try {
     const response = await fetch("/api/estadisticas/actividades-por-comuna");
-    if (!responde.ok) throw new Error(response.status);
+    if (!response.ok) throw new Error(response.statusText);
     const data = await response.json();
+    return data.datos || data || [];
   } catch (error) {
     console.error("Error fetching Datos de Actividades por Comuna", error);
     return [];
@@ -194,7 +249,91 @@ async function cargarActividadesPorComuna() {
 }
 
 cargarActividadesPorComuna().then(datos => {
-  // construir gráfico aquí
+  const regionPalette = [
+    '#2e7d32', '#1565c0', '#6a1b9a', '#c62828', '#ef6c00', '#00838f',
+    '#5d4037', '#455a64', '#6d4c41', '#283593', '#ad1457', '#00897b',
+    '#7b1fa2', '#d32f2f', '#f9a825', '#1e88e5'
+  ];
+
+  const categories = (datos || []).map((d) => d.comuna || 'Sin comuna');
+  const regions = [...new Set((datos || []).map((d) => d.region || 'Sin región'))];
+  const regionColorMap = regions.reduce((map, region, index) => {
+    map[region] = regionPalette[index % regionPalette.length];
+    return map;
+  }, {});
+
+  const regionSeriesMap = new Map();
+  (datos || []).forEach((d, index) => {
+    const region = d.region || 'Sin región';
+    const point = {
+      x: index,
+      y: Number(d.cantidad ?? d.valor ?? 0),
+      name: d.comuna || 'Sin comuna',
+      color: regionColorMap[region],
+    };
+    if (!regionSeriesMap.has(region)) {
+      regionSeriesMap.set(region, []);
+    }
+    regionSeriesMap.get(region).push(point);
+  });
+
+  const series = Array.from(regionSeriesMap.entries()).map(([region, data]) => ({
+    name: region,
+    color: regionColorMap[region],
+    data,
+    showInLegend: true,
+  }));
+
+  Highcharts.chart('bar_container', {
+    chart: {
+      type: 'column',
+      zoomType: 'x',
+      scrollablePlotArea: {
+        minWidth: Math.max(categories.length * 12, 800),
+        scrollPositionX: 0,
+      },
+    },
+    title: { text: 'Número de Actividades Registradas por Comuna' },
+    subtitle: { text: 'Cada barra representa una comuna y el color indica su región' },
+    xAxis: {
+      categories,
+      title: { text: 'Comuna' },
+      labels: {
+        rotation: -90,
+        align: 'right',
+        style: { fontSize: '9px' },
+        step: Math.ceil(categories.length / 40),
+      },
+    },
+    yAxis: {
+      min: 0,
+      title: { text: 'Cantidad de actividades' },
+    },
+    tooltip: {
+      headerFormat: '<span style="font-size:10px">{point.key}</span><br/>',
+      pointFormat:
+        '<span style="color:{point.color}">●</span> {series.name}: <b>{point.y}</b><br/>',
+    },
+    plotOptions: {
+      column: {
+        borderWidth: 0,
+        pointPadding: 0.1,
+        groupPadding: 0,
+      },
+      series: {
+        borderWidth: 0,
+      },
+    },
+    legend: {
+      align: 'center',
+      verticalAlign: 'bottom',
+      layout: 'horizontal',
+      itemStyle: { fontSize: '10px' },
+    },
+    credits: { enabled: false },
+    series,
+  });
+
   console.log(datos);
 });
 

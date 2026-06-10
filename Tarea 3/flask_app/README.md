@@ -74,4 +74,8 @@ Se consideró implementar una flecha que the lleve al inicio de la caja de comen
 
 1. *10/06:* El proceso de obtener los datos desde la base de datos se adiere al proceso típico de definir la función que hace un query en el lado servidor con db.py, y luego un archivo javascript solicita los datos para crear los gráficos en el lado del usuario/browser utilizando métodos como fetch y XHR asíncronos.
 
-2. B
+2. *10/06:* Se utilizaron los ejemplos de gráficos de cada tipo de Highcharts para usar como base, tanto en el HTML, JS, y CSS.
+
+3. *10/06:* En el tercer gráfico, el de barras que representa la cantidad de actividades registradas por comuna, se logró implementar colores por región. *Preocupación* de diseño: Si bien los datos introducidos a la base de datos no son muchos porque es una lata meterlos mediante el formuario, y por eso los gráficos actualmente representan cantidades bajas de datos, estos pueden verse afectados en su visibilidad al aumentar el volumen de estos. Esta preocupación va enfocada al *gráfico de barras* que en el eje X tiene que mostrar una barra por comuna. Esto es un problema considerando que hay un total de 345 datos en esta tabla. 
+
+*Solución pensada:* Agregar una función *scroll* horizontal al gráfico y un *ancho mínimo* para las barras. De este modo, cuando se junte un número específico de barras dentro del gráfico, este pueda expandirse a los lados sin perjudicar la visibilidad. No se pueden definir estas muy anchas, pues no queremos un scroll horizontal eterno para poder acceder a ciertos datos.

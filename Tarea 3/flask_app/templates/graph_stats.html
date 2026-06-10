@@ -32,19 +32,40 @@
 
         <!-- Inicio sección agregados tarea 3 -->
 
-        <!-- Para los 3 siguientes gráficos se debe usar Javascript (XHR o fetch) para generar los gráficos en el lado del cliente, llamando 
-         a una URL del lado del servidor que obtiene la información desde la base de datos. -->
+        <!-- Gráfico de Líneas : Número de Miembros Registrados por Día -->
     
         <section class="charts-section" aria-labelledby="chart-lineNumMembersPerDay-heading">
             <h2 id="chart-lineNumMembersPerDay-heading" class="chart-title">Miembros Registrados por Día</h2>
+            <figure class="highcharts-figure">
+                <div id="line_container"></div>
+                <p class="highcharts-description">
+                  Número de Miembros Registrados por Día
+                </p>
+            </figure>
         </section>
+
+        <!-- Grafico de Torta : Número de Actividades de Cada Tipo -->
 
         <section class="charts-section" aria-labelledby="chart-pieNumActEachType-heading">
             <h2 id="chart-pieNumActEachType-heading" class="chart-title">Cantidad de Actividades Registradas de Cada Tipo</h2>
+            <figure class="highcharts-figure">
+                <div id="pie_container"></div>
+                <p class="highcharts-description">
+                  Cantidades de Actividades pertenecientes a cada tipo mediante un gráfico de torta.
+                </p>
+            </figure>
         </section>
+
+        <!-- Gráfico de Barras : Número de Actividades Registradas por Comuna -->
 
         <section class="charts-section" aria-labelledby="chart-barNumActRegPerCommune-heading">
             <h2 id="chart-barNumActRegPerCommune-heading" class="chart-title">Cantidad de Actividades Registradas Dentro de Cada Comuna</h2>
+            <figure class="highcharts-figure">
+                <div id="bar_container"></div>
+                <p class="highcharts-description">
+                    Número de Actividades Registradas por Comuna, Destacando mediante el uso de Colores las Regiones de Cada Comuna
+                </p>
+            </figure>
         </section>        
 
 
@@ -55,5 +76,28 @@
         </nav>
     </div>
     <script src="{{ url_for('static', filename='js/graphData.js') }}"></script>
+    <!-- Scripts added for Pie Graph -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/non-cartesian-zoom.js"></script>
+    <script src="https://code.highcharts.com/modules/mouse-wheel-zoom.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/themes/adaptive.js"></script>
+
+    <!-- Scripts added for Line Graph (Mostly dumplicate xd - keeping to keep track only)-->
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <!-- <script src="https://code.highcharts.com/highcharts.js"></script> Duplicate -->
+    <!-- <script src="https://code.highcharts.com/modules/exporting.js"></script> Duplicate -->
+    <!-- <script src="https://code.highcharts.com/modules/export-data.js"></script> Duplicate -->
+    <!-- <script src="https://code.highcharts.com/modules/accessibility.js"></script> Duplicate -->
+    <!-- <script src="https://code.highcharts.com/themes/adaptive.js"></script> Duplicate -->
+
+    <!-- Scripts added for Bar Graph -->
+    <!-- <script src="https://code.highcharts.com/highcharts.js"></script> 
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/themes/adaptive.js"></script> All Duplicate -->
+
 </body>
 </html>
