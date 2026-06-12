@@ -80,14 +80,26 @@ Se consideró implementar una flecha que the lleve al inicio de la caja de comen
 
 *Solución pensada:* Agregar una función *scroll* horizontal al gráfico y un *ancho mínimo* para las barras. De este modo, cuando se junte un número específico de barras dentro del gráfico, este pueda expandirse a los lados sin perjudicar la visibilidad. No se pueden definir estas muy anchas, pues no queremos un scroll horizontal eterno para poder acceder a ciertos datos. *Ver si se implementará esta optimización al final del trabajo si queda tiempo*.
 
-4. *12/06:* Detalles finales: 
+*-- Sección Corrección y Validación de archivos HTML --*
 
-   4.1. CSS validado *sin errores*.
+1. *12/06:* Detalles finales: 
 
-   4.2. *html en general:* Se detecta el uso de los carácteres '{' y '}' como erroneo, por lo que el validador no acepta expreciones *Jinja*.
+   1.1. CSS validado *sin errores*.
+
+   1.2. *html en general:* Se detecta el uso de los carácteres '{' y '}' como erroneo, por lo que el validador no acepta expreciones *Jinja*.
    
-   4.3. *read_comment.html y comment_form.html:* Se detecta como error la falta de sección *<head>*, lo cual se hizo considerando que estos templates son implementados dentro de otro template previamente definido, *member_details.html*, el cual si tiene esta sección, en donde se incluye *<DOCTYPE html>, <html lang="en">, y <meta charset="UTF-8">*. La falta de estos genera un error dentro del validador.
+   1.3. *read_comment.html y comment_form.html:* Se detecta como error la falta de sección *<head>*, lo cual se hizo considerando que estos templates son implementados dentro de otro template previamente definido, *member_details.html*, el cual si tiene esta sección, en donde se incluye *<DOCTYPE html>, <html lang="en">, y <meta charset="UTF-8">*. La falta de estos genera un error dentro del validador.
 
    Se mandó correo preguntando sobre la validéz de este error y se espera respuesta para ver cual de las tres soluciones se implementará: <Agregar los datos faltantes a estos dos archivos>, <ignorar el error> o <combinar los archivos de modo que las funciones de comentar (formulario para agregar comentario) y de cargar los comentarios anteriores esté todo dentro de un mismo archivo html *junto con member_details.html*> 
 
-   4.4. Muchos de los archivos html tienen problemas en la validación por el uso de jinja. Se verificó el uso de syntaxis jinja2 dentro del código de los aux y estos generan los mismos errores al pasar los archivos por el validador.
+   1.4. Muchos de los archivos html tienen problemas en la validación por el uso de jinja. Se verificó el uso de syntaxis jinja2 dentro del código de los aux y estos generan los mismos errores al pasar los archivos por el validador.
+
+   2. Usando el validador de html (https://validator.w3.org/), al trabajar con la página descrita por la vista 'member_detail.html' de alguno de los miembros registrados, se detectan múltiples errores de etiquetas '<div>' y '</div>' que no se encuentran cerradas. Esto al revisar el archivo no se logra encontrar el error, pues todas las etiquetas se encuentran cerradas con su contraparte correspondiente con la identación correcta.
+
+   3. No solo eso, si no que se detectan 'ID's duplicados. Esto no es un error de el template en si, si no que se detecta el uso de un mismo template múltiples veces dentro de una misma página. Como se explicó anteriormente, en la vista 'member_detail' se puede ver el listado de actividades de un miembro. Una de las deciciones de diseño fue que se iba a agregar una sección de comentarios al pie de cada una de estas actividades. Y otra decición de diseño hecha fue que se iba a crear un template para el formulario de comentarios y otro para la visualización de los comentarios. Estos dos templates son llamados por 'member_detail' para cada una de las actividades, por lo que dentro de una vista pueden haber múltiples llamadas a estos templates.
+   
+   En el caso de que se testee el html con un usuario que tenga n actividades, se generan n llamadas a los templates 'comment_form' y 'read_comments'. Por esto se cree que se tienen los errores descritos en este y el punto anterior.
+
+   Estas deciciones de diseño fueron tomadas considerando que el volumen de actividades ingresadas para esta api no sería alto y con el objetivo de no agregar un gran volumen de líneas directamente al template 'member_detail'. Además la función de comentario es una que se puede ampliar a más áreas, por lo que tenerla separada de los detalles de un miembro, tenerlo separado me hizo más sentido inicialmente.
+
+*--
