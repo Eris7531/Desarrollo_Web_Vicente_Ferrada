@@ -90,13 +90,17 @@ Tendremos que agregar un nuevo bloque para cada una de las actividades que tenga
             {% if m.actividades_pages > 1 %}
             <nav class="pagination actividades-pagination" aria-label="Paginación de actividades">
                 {% set mid = m.id %}
-                {% set cp = m.actividades_page %}
-                {% set tp = m.actividades_pages %}
+                {% set cp = m.actividades_page %} <!-- Current Page -->
+                {% set tp = m.actividades_pages %} <!-- Total Page -->
                 <a class="nav-btn nav-btn--small" href="{{ url_for('miembro_detalle', mid=mid, act_page=cp-1) if cp > 1 else '#' }}"
-                   {% if cp <= 1 %}aria-disabled="true" style="pointer-events:none;opacity:0.5"{% endif %}>Actividades — anterior</a>
+                   {% if cp <= 1 %} 
+                   aria-disabled="true" style="pointer-events:none;opacity:0.5"
+                   {% endif %}>Actividades — anterior</a>
                 <span class="page-info">Página {{ cp }} / {{ tp }}</span>
                 <a class="nav-btn nav-btn--small" href="{{ url_for('miembro_detalle', mid=mid, act_page=cp+1) if cp < tp else '#' }}"
-                   {% if cp >= tp %}aria-disabled="true" style="pointer-events:none;opacity:0.5"{% endif %}>Actividades — siguiente</a>
+                   {% if cp >= tp %}
+                   aria-disabled="true" style="pointer-events:none;opacity:0.5"
+                   {% endif %}>Actividades — siguiente</a>
             </nav>
             {% endif %}
             {% else %}
