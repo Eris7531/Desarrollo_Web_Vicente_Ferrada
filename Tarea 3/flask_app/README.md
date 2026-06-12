@@ -79,3 +79,15 @@ Se consideró implementar una flecha que the lleve al inicio de la caja de comen
 3. *10/06:* En el tercer gráfico, el de barras que representa la cantidad de actividades registradas por comuna, se logró implementar colores por región. *Preocupación* de diseño: Si bien los datos introducidos a la base de datos no son muchos porque es una lata meterlos mediante el formuario, y por eso los gráficos actualmente representan cantidades bajas de datos, estos pueden verse afectados en su visibilidad al aumentar el volumen de estos. Esta preocupación va enfocada al *gráfico de barras* que en el eje X tiene que mostrar una barra por comuna. Esto es un problema considerando que hay un total de 345 datos en esta tabla. 
 
 *Solución pensada:* Agregar una función *scroll* horizontal al gráfico y un *ancho mínimo* para las barras. De este modo, cuando se junte un número específico de barras dentro del gráfico, este pueda expandirse a los lados sin perjudicar la visibilidad. No se pueden definir estas muy anchas, pues no queremos un scroll horizontal eterno para poder acceder a ciertos datos. *Ver si se implementará esta optimización al final del trabajo si queda tiempo*.
+
+4. *12/06:* Detalles finales: 
+
+   4.1. CSS validado *sin errores*.
+
+   4.2. *html en general:* Se detecta el uso de los carácteres '{' y '}' como erroneo, por lo que el validador no acepta expreciones *Jinja*.
+   
+   4.3. *read_comment.html y comment_form.html:* Se detecta como error la falta de sección *<head>*, lo cual se hizo considerando que estos templates son implementados dentro de otro template previamente definido, *member_details.html*, el cual si tiene esta sección, en donde se incluye *<DOCTYPE html>, <html lang="en">, y <meta charset="UTF-8">*. La falta de estos genera un error dentro del validador.
+
+   Se mandó correo preguntando sobre la validéz de este error y se espera respuesta para ver cual de las tres soluciones se implementará: <Agregar los datos faltantes a estos dos archivos>, <ignorar el error> o <combinar los archivos de modo que las funciones de comentar (formulario para agregar comentario) y de cargar los comentarios anteriores esté todo dentro de un mismo archivo html *junto con member_details.html*> 
+
+   4.4. Muchos de los archivos html tienen problemas en la validación por el uso de jinja. Se verificó el uso de syntaxis jinja2 dentro del código de los aux y estos generan los mismos errores al pasar los archivos por el validador.
