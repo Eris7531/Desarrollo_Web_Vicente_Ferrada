@@ -47,7 +47,7 @@ tabla comentario.
     <!-- Solo se crean dos campos, pues este formulario solo requiere un nombre de usuario y el comentario en si. -->
     <nav class="navigation-container form-nav" aria-label="Crear_comentario">
         <form id="comentarioForm" name="combinedForm" method="post" enctype="application/x-www-form-urlencoded" novalidate>
-            <h2 class="nombre_comentarista">Nombre del Comentarista</h2>
+            <h2 class="nombre_comentarista">Nuevo Comentario:</h2>
             <label for="nombre">Nombre completo <span class="req">*</span></label>
             <input type="text" name="nombre" id="nombre" minlength="3" maxlength="80"> <!-- value="{{"Nombre del Comentarista"}}" -->
             {% if field_errors.get('nombre_comentarista') %}<p class="field-error">{{ field_errors.nombre_comentarista }}</p>{% endif %}
@@ -66,8 +66,6 @@ tabla comentario.
             <input type="hidden" name="actividad_id" value="{{a.id}}">
             <button type="submit">Subir Comentario</button>
         </form>
-        <!-- Debemos trabajar con esta sección internamente, de modo de que se comunique con el servidor, y que se valide nuevamente, de 
-         modo de que se eviten inyecciónes maliciosas. -->
     </nav> 
 </div>
 

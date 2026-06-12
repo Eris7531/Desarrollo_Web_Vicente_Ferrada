@@ -10,7 +10,7 @@
     <div class="main-container main-container--wide">
         <header class="list-header">
             <!-- <h1>Indicadores (datos desde las tablas dentro del schema tarea2)</h1> -->
-            <h1>Indicadores y gráficos</h1>
+            <h1>Indicadores y gráficos</h1><br>
             <p class="form-intro">Los gráficos se construyen con consultas agregadas a las tablas <code>miembro</code>, <code>comuna</code>, <code>region</code> y <code>actividad</code>.</p>
         </header>
 
@@ -21,52 +21,52 @@
             <!-- <p class="home-recent-note">Cantidad de miembros según la comuna (agrupado por región).</p> -->
             <canvas id="chart-miembros" width="640" height="320" role="img" aria-label="Gráfico de barras: miembros por región"></canvas>
             <ul class="chart-legend" id="legend-miembros"></ul>
-        </section>
+        </section><br>
 
         <section class="charts-section" aria-labelledby="chart-act-heading">
             <h2 id="chart-act-heading" class="chart-title">Actividades por categoría</h2>
             <!-- <p class="home-recent-note">Conteo de filas en <code>actividad</code> por tipo.</p> -->
             <canvas id="chart-actividades" width="640" height="320" role="img" aria-label="Gráfico horizontal: actividades por categoría"></canvas>
             <ul class="chart-legend" id="legend-actividades"></ul>
-        </section>
+        </section><br>
 
         <!-- Inicio sección agregados tarea 3 -->
 
         <!-- Gráfico de Líneas : Número de Miembros Registrados por Día -->
     
         <section class="charts-section" aria-labelledby="chart-lineNumMembersPerDay-heading">
-            <h2 id="chart-lineNumMembersPerDay-heading" class="chart-title">Miembros Registrados por Día</h2>
+            <h2 id="chart-lineNumMembersPerDay-heading" class="chart-title">Miembros Registrados por Día</h2><br>
             <figure class="highcharts-figure">
                 <div id="line_container"></div>
-                <p class="highcharts-description">
+                <!-- <p class="highcharts-description">
                   Número de Miembros Registrados por Día
-                </p>
+                </p> -->
             </figure>
-        </section>
+        </section><br>
 
         <!-- Grafico de Torta : Número de Actividades de Cada Tipo -->
 
         <section class="charts-section" aria-labelledby="chart-pieNumActEachType-heading">
-            <h2 id="chart-pieNumActEachType-heading" class="chart-title">Cantidad de Actividades Registradas de Cada Tipo</h2>
+            <h2 id="chart-pieNumActEachType-heading" class="chart-title">Cantidad de Actividades Registradas de Cada Tipo</h2><br>
             <figure class="highcharts-figure">
                 <div id="pie_container"></div>
-                <p class="highcharts-description">
+                <!-- <p class="highcharts-description">
                   Cantidades de Actividades pertenecientes a cada tipo mediante un gráfico de torta.
-                </p>
+                </p> -->
             </figure>
-        </section>
+        </section><br>
 
         <!-- Gráfico de Barras : Número de Actividades Registradas por Comuna -->
 
         <section class="charts-section" aria-labelledby="chart-barNumActRegPerCommune-heading">
-            <h2 id="chart-barNumActRegPerCommune-heading" class="chart-title">Cantidad de Actividades Registradas Dentro de Cada Comuna</h2>
+            <h2 id="chart-barNumActRegPerCommune-heading" class="chart-title">Cantidad de Actividades Registradas Dentro de Cada Comuna</h2><br>
             <figure class="highcharts-figure">
                 <div id="bar_container"></div>
-                <p class="highcharts-description">
+                <!-- <p class="highcharts-description">
                     Número de Actividades Registradas por Comuna, Destacando mediante el uso de Colores las Regiones de Cada Comuna
-                </p>
+                </p> -->
             </figure>
-        </section>        
+        </section><br>        
 
 
         <!-- Fin sección agregados tarea 3 -->
