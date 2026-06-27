@@ -102,4 +102,38 @@ Se consideró implementar una flecha que the lleve al inicio de la caja de comen
 
    Estas deciciones de diseño fueron tomadas considerando que el volumen de actividades ingresadas para esta api no sería alto y con el objetivo de no agregar un gran volumen de líneas directamente al template 'member_detail'. Además la función de comentario es una que se puede ampliar a más áreas, por lo que tenerla separada de los detalles de un miembro, tenerlo separado me hizo más sentido inicialmente.
 
-*--
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Tarea 4:
+
+Deciciones de Diseño:
+
+**Sección Observaciónes, Planificación y Comprención de Requisitos: (27/06)**
+
+1. Las nuevas funcionalidades deben ser incroporadas usando si o si el framework *Spring Boot* y manteniendo la asyncronidad de Javascript usando las llamadas *xhr y/p fetch*.
+
+2. Funciónalidad Nueva N°1 - *Buscador de Actividades*: Debe umplir los siguientes requisitos:
+
+   a) Debe ser un *formulario* con un *único* input, el cual corresponde a un input de tipo *texto*.
+   b) Al introducir *3 o más* carácteres dentro del campo de texto se debe *realizar una búsqueda automáticamente*, la cual deberá un *listado de actividades* que hagan match con lo escrito en el input con su *nombre, descripción o comuna* correspondiente.
+   c) En caso de no encontrar match con los carácteres agregados en el campo de texto, se deberá mostrar un *mensaje* apropiado.
+   d) Hacer click en un botón de *'buscar'* o seleccionar la tecla *enter* (por decidir aún en función a la dificultad y el tiempo, donde el botón probablemente resulta en una implementación más simple), se deberá dirigir a una nueva vista llamada *vista_resultados.html*.
+
+3. Funciónalidad Nueva N°2 - *Vista Resultados de Búsqueda*: Esta tiene las siguientes propiedades:
+
+   a) Es una vista adicional dentro del archivo *vista_resultados.html* la cual mostrará una lista de las actividades que hagan match con el input de búsqueda ingresado. 
+   b) Debe indicar los siguientes atributos para cada actividad: [nombreMiembro, díaActividad, tipoActividad, comuna, nombreActividad, descripciónActividad]
+   c) En cada fila de actividades, se debe *destacar* la parte de texto de la actividad que hace match con el input de texto.
+   d) Tras mostrar los resultados de búsqueda, se debe *agregar una nueva información*. Esta es *'Nota'*, la cual tiene un valor '-' si la actividad aún *no ha sido evaluada*. Además se debe agregar un botón o enlace *'Evaluar'* la cual permite al usuario dar un *puntaje entre 1 y 7 (incluyendo los valores 1 y 7)* a dicha actividad. Este nuevo dato debe ser *agregado a la base de datos*, con las validaciones correspondientes.
+
+**Sección Desiciones de Diseño:**
+
+1. *(27/06)* El listado de resultados de búsqueda tendrá la misma estructura que la vista *'member_list.html'* ya que ambos presentan una lista de actividades con atributos relacionados. Basta con modificar qué atributos son los mostrados, la creación del botón para *'Evaluar'* y la función de *destacar* qué parte hizo match con la búsqueda. Se eliminará los filtros de orden alfabético y relacionados para reducir la compljidad de la vista. 
+
+En caso de tener más tiempo, se haría un template *'listView_base.html'* para crear estas dos vistas y cualquier futura vista que involucre el mostrar una lista de datos obtenidos desde la base de datos.
+
+2. *(27/06)* En las tareas anteriores, el *descripción_actividad* no ha implementado correctamente. Este toma el atributo *nombre_actividad* como placeholder y no se solucionó en las tareas anteriores. Esto no se arreglará en la tarea actual si no que se adaptará a lo que se tiene presente para la creación de la vista de resultados de búsqueda. Por esto, no se intentará hacer match con el atributo *'descripsción_actividad'* ni será mostrado entre los datos de actividad en la vista de resultados de búsqueda. En resumen, este atributo será ignorado, y el *nombre de la actividad* en conjunto con el *tipo de actividad* se considerarán suficientes.
+
+3. *(27/06)* En las instrucciones se indica que el usuario puede valorar una actividad con un puntaje dentro del intervalo [1, 7]. Aquí se limitará a una selección de los enteros en la lista (nombre no fijo) *EvalScore = {1, 2, 3, 4, 5, 6, 7}*. Esto facilitará las validaciones y solo se tendrá que hacer un único cálculo interno para mostrar la *nota promedio* de cada actividad.
+
+4. *(27/06)* 
