@@ -390,20 +390,5 @@ def get_actividades_por_tipo():
 
 # Fin Adiciones tarea 3 : Sección Gráficos.
 
-# Inicio Adiciones tarea 4: Resultados de Búsqueda.
-
-@app.route("/busqueda", methods=["GET"])
-def busqueda():
-    return render_template("searchBox.html")
-
-@app.route("/busqueda/resultados", methods=["POST"])
-def resultados_busqueda():
-    data = request.get_json(silent=True) or {}
-    query_value = (data.get("query") or "").strip()
-    datos = dbm.actividad_miembro_comuna_detalle(search_term=query_value)
-    return {"datos": datos}
-
-# Fin Adiciones tarea 4: Resultados de Búsqueda.
-
 if __name__ == "__main__":
     app.run(debug=True)

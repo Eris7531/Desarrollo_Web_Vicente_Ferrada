@@ -143,3 +143,5 @@ Así, este botón nos llevará a una vista dedicada exclusivamente a la búsqued
 5. *(27/06)* Como no tenemos un template *'base.html'*, agregar un botón de búsqueda de actividades que se encuentre presente en todas las vistas para que este sea accesible en cualquier parte de la página es dificultoso y hay preocupaciones de que el agregar un template de este estilo pueda romper el código actualmente funcional de las tareas anteriores.
 
 Por esto, y como se indica en el punto (4), se tendrá una vista exclusiva para la búsqueda, y el acceso a esta se encontrará en la página de inicio, es decir, dentro de *'home.html'* se agregará un cuarto botón para acceder a la búsqueda.
+
+6. *(27/06)* **Cambio Importante** Se observó que era escencial para esta tarea el uso de Spring Boot, por lo que se creó la carpeta 'spring_tarea4' en donde queremos tener aisladas las nuevas funcionalidades descritas en los puntos anteriores. Se tendrá que migrar los cambios hachos dentro de 'flask_app' para implementarlos con el nuevo framework.
