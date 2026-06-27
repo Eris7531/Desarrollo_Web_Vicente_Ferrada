@@ -136,4 +136,6 @@ En caso de tener más tiempo, se haría un template *'listView_base.html'* para 
 
 3. *(27/06)* En las instrucciones se indica que el usuario puede valorar una actividad con un puntaje dentro del intervalo [1, 7]. Aquí se limitará a una selección de los enteros en la lista (nombre no fijo) *EvalScore = {1, 2, 3, 4, 5, 6, 7}*. Esto facilitará las validaciones y solo se tendrá que hacer un único cálculo interno para mostrar la *nota promedio* de cada actividad.
 
-4. *(27/06)* 
+4. *(27/06)* Inicialmente se había planteado hacer dos vistas, una *'searchBox.html'* y otra *'searchResults.html'* pero se optó por una única vista. Esto simplifica el cómo mostramos los resultados *mientras* el usuario escribe. Si fuese un search box que aparece sobre la vista que el usuario esté al seleccionar el botón de búsqueda, este debería tomar mucho espacio, quitando el propósito de ser de tipo popup o una pequeña sección que se abra al seleccionar el botón de búsqueda. 
+
+Así, este botón nos llevará a una vista dedicada exclusivamente a la búsqueda de actividades. Esta mantendrá la idea del punto 1, de ser de similar estructura a la vista *'member_list.html'*.

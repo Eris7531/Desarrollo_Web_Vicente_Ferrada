@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Actividades</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="main-container main-container--wide">
+        <header class="list-header">
+            <h1>Búsqueda de actividades</h1>
+        </header>
+
+        <form id="search-form" class="controls-panel" aria-label="Buscar actividades">
+            <div class="control-row">
+                <label for="search-input">Buscar</label>
+                <input id="search-input" name="query" type="search" placeholder="Actividad, miembro, comuna o tipo">
+            </div>
+            <div class="control-row control-row--narrow">
+                <button type="submit" class="nav-btn">Buscar</button>
+            </div>
+        </form>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <caption class="sr-only">Resultados de búsqueda</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre Actividad</th>
+                        <th scope="col">Día de Actividad</th>
+                        <th scope="col">Tipo(s) actividad</th>
+                        <th scope="col">Nombre Miembro</th>
+                        <th scope="col">Comuna</th>
+                    </tr>
+                </thead>
+                <tbody id="search-results-body">
+                    <tr>
+                        <td colspan="5">Ingresa un término y presiona Buscar.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <nav class="navigation-container list-footer-nav">
+            <a class="nav-btn" href="{{ url_for('home') }}">Volver al inicio</a>
+        </nav>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/searchRelated.js') }}"></script>
+</body>
+</html>
