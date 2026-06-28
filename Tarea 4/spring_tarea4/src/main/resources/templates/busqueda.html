@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Búsqueda de Actividades</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
     <div class="main-container main-container--wide">
@@ -12,41 +12,48 @@
             <h1>Búsqueda de actividades</h1>
         </header>
 
+        <p class="home-recent-note">Escriba al menos 3 caracteres para buscar por nombre de actividad, tipo o comuna.</p>
+
         <form id="search-form" class="controls-panel" aria-label="Buscar actividades">
             <div class="control-row">
                 <label for="search-input">Buscar</label>
-                <input id="search-input" name="query" type="search" placeholder="Actividad, miembro, comuna o tipo">
+                <input id="search-input" name="query" type="text" autocomplete="off"
+                       placeholder="Nombre actividad, tipo o comuna" maxlength="80">
             </div>
             <div class="control-row control-row--narrow">
                 <button type="submit" class="nav-btn">Buscar</button>
             </div>
         </form>
 
+        <p id="search-status" class="home-recent-note" aria-live="polite"></p>
+
         <div class="table-wrap">
             <table class="data-table">
                 <caption class="sr-only">Resultados de búsqueda</caption>
                 <thead>
                     <tr>
-                        <th scope="col">Nombre Actividad</th>
-                        <th scope="col">Día de Actividad</th>
-                        <th scope="col">Tipo(s) actividad</th>
-                        <th scope="col">Nombre Miembro</th>
+                        <th scope="col">Miembro</th>
+                        <th scope="col">Día</th>
+                        <th scope="col">Tipo</th>
                         <th scope="col">Comuna</th>
+                        <th scope="col">Actividad</th>
+                        <th scope="col">Nota</th>
+                        <th scope="col">Acción</th>
                     </tr>
                 </thead>
                 <tbody id="search-results-body">
                     <tr>
-                        <td colspan="5">Ingresa un término y presiona Buscar.</td>
+                        <td colspan="7">Ingresa un término de búsqueda.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <nav class="navigation-container list-footer-nav">
-            <a class="nav-btn" href="{{ url_for('home') }}">Volver al inicio</a>
+            <a class="nav-btn" th:href="${flaskHomeUrl}">Volver al inicio (Flask)</a>
         </nav>
     </div>
 
-    <script src="{{ url_for('static', filename='js/searchRelated.js') }}"></script>
+    <script th:src="@{/js/searchRelated.js}"></script>
 </body>
 </html>

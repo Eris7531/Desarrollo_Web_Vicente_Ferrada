@@ -144,4 +144,8 @@ Así, este botón nos llevará a una vista dedicada exclusivamente a la búsqued
 
 Por esto, y como se indica en el punto (4), se tendrá una vista exclusiva para la búsqueda, y el acceso a esta se encontrará en la página de inicio, es decir, dentro de *'home.html'* se agregará un cuarto botón para acceder a la búsqueda.
 
+<<<<<<< HEAD
 6. *(27/06)* Se va a implementar *Spring Boot* siguiendo los pasos del video del Auxiliar 9.
+=======
+6. *(27/06)* **Cambio Importante** Se observó que era escencial para esta tarea el uso de Spring Boot, por lo que se creó la carpeta 'spring_tarea4' en donde queremos tener aisladas las nuevas funcionalidades descritas en los puntos anteriores. Se tendrá que migrar los cambios hachos dentro de 'flask_app' para implementarlos con el nuevo framework.
+>>>>>>> 99c468b969bd2a1cdd777c7b137ab17d7dd167e6
