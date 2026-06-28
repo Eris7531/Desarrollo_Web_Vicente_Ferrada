@@ -1,5 +1,3 @@
--- Active: 1776967762738@@127.0.0.1@3306@tarea2
--- Tabla de notas para Tarea 4 (ejecutar sobre la base tarea2 existente)
 CREATE TABLE IF NOT EXISTS `tarea2`.`nota` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `actividad_id` INT NOT NULL,

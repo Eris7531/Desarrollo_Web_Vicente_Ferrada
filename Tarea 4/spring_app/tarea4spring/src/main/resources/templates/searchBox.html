@@ -11,7 +11,7 @@
         <header class="list-header">
             <h1>Búsqueda de actividades</h1>
             <p class="page-intro">Escribe al menos 3 caracteres para buscar por nombre de actividad o comuna.</p>
-            <p class="home-recent-note">Puede hacer clic en una fila para ver el detalle del miembro en Flask.</p>
+            <p class="home-recent-note">Puede hacer clic en una fila para ver el detalle del miembro.</p>
         </header>
 
         <form id="search-form" class="controls-panel" aria-label="Buscar actividades">
@@ -46,12 +46,11 @@
         </div>
 
         <nav class="navigation-container list-footer-nav">
-            <a class="nav-btn" th:href="${flaskHomeUrl}">Volver al inicio (Flask)</a>
+            <a class="nav-btn" th:href="${flaskHomeUrl}">Volver al inicio</a>
         </nav>
     </div>
 
     <script th:inline="javascript">
-        window.FLASK_HOME_URL = /*[[${flaskHomeUrl}]]*/ "/";
         window.FLASK_MIEMBROS_BASE_URL = /*[[${flaskMiembrosBaseUrl}]]*/ "/miembros/";
     </script>
     <script th:src="@{/js/searchRelated.js}"></script>

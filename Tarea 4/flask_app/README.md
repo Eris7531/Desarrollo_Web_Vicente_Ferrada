@@ -132,7 +132,7 @@ Deciciones de Diseño:
 
 En caso de tener más tiempo, se haría un template *'listView_base.html'* para crear estas dos vistas y cualquier futura vista que involucre el mostrar una lista de datos obtenidos desde la base de datos.
 
-2. *(27/06)* En las tareas anteriores, el *descripción_actividad* no ha implementado correctamente. Este toma el atributo *nombre_actividad* como placeholder y no se solucionó en las tareas anteriores. Esto no se arreglará en la tarea actual si no que se adaptará a lo que se tiene presente para la creación de la vista de resultados de búsqueda. Por esto, no se intentará hacer match con el atributo *'descripsción_actividad'* ni será mostrado entre los datos de actividad en la vista de resultados de búsqueda. En resumen, este atributo será ignorado, y el *nombre de la actividad* en conjunto con el *tipo de actividad* se considerarán suficientes.
+2. *(27/06)* En las tareas anteriores, el atributo *descripción_actividad* no fue implementado correctamente. Este toma el atributo *nombre_actividad* como placeholder y no se solucionó en las tareas anteriores. Esto no se arreglará en la tarea actual si no que se adaptará a lo que se tiene presente para la creación de la vista de resultados de búsqueda. Por esto, no se intentará hacer match con el atributo *'descripsción_actividad'* ni será mostrado entre los datos de actividad en la vista de resultados de búsqueda. En resumen, este atributo será ignorado, y el *nombre de la actividad* en conjunto con el *tipo de actividad* se considerarán suficientes.
 
 3. *(27/06)* En las instrucciones se indica que el usuario puede valorar una actividad con un puntaje dentro del intervalo [1, 7]. Aquí se limitará a una selección de los enteros en la lista (nombre no fijo) *EvalScore = {1, 2, 3, 4, 5, 6, 7}*. Esto facilitará las validaciones y solo se tendrá que hacer un único cálculo interno para mostrar la *nota promedio* de cada actividad.
 
@@ -155,7 +155,6 @@ flask run //o ejecutar 'python app.py'
 
 *Terminal 2:*
 
-$env:JAVA_HOME = "C:/Program Files/Java/jdk-26.0.1"
 cd "c:/.../spring_app/tarea4spring"
 .\mvnw.cmd spring-boot:run
 
@@ -163,6 +162,10 @@ cd "c:/.../spring_app/tarea4spring"
 Finalmente, se abre desde la terminal 1 la página 'http:[//]127.0.0.1:5000'.
 
 
-8. *(28/06)*
+8. *(28/06)* Ya que se va a tener un botón 'Evaluar' para cada una de las actividades que se obtengan como resultado de la búsqueda, vamos a hacer que al interactuar con este, desaparezca, en cambio se hagan visibles dos campos. Uno que nos dejará seleccionar uno de los enteros en el intervalo [1, 7] y un nuevo botón. 'Guardar', el cual funciona como el típio 'Enviar' de cualquier formulario que hemos hecho anteriormente.
 
-9. *(28/06)*
+9. *(28/06)* Como el template 'searchBox.html' esta fuertemente inspirado en uno de nuestros templates anteriores, 'member_list.html', se decidió agregar una función adicional. Esta es el poder acceder a 'miembro_detalle', en donde se ven los detalles del miembro dueño de la actividad y de la actividad en si, al hacer click sobre la fila que muestra el resultado. Esto hace sentido, pues si uno está buscando una actividad uno va a querer ver más detalles de esta tras encontrarla en el buscador.
+
+10. *(28/06)* Dado el punto anterior, se consideró agregar la función de 'Evaluar' en la vista 'miembro_detalle', pero se decidió que mejor no, ya que se debería implementar dos funciones que interactuan con la tabla 'tabla-nota' con el mismo funcionamiento en los fos frameworks, flask y spring root. Hay posibilidad de romper partes del código ya funcional agregando esta función ya que no tengo claro cómo hacerlo, además de las restricciones de tiempo.
+
+11. *(28/06)* En la versión actual de la página/aplicación es posible 'Evaluar' una actividad múltiples veces, lo cual sería un problema en una página como la nuestra si fuera real. Como no se incorporó cuentas, no estoy seguro de cómo se podría limitar la cantidad de 'Evaluaciones' a cada actividad individual a 1. Por esto no se implementará, solamente se hará esta observación del posible problema que esto tiene.
