@@ -409,4 +409,4 @@ def get_actividades_por_tipo():
 # Fin Adiciones tarea 4: Resultados de Búsqueda.
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")

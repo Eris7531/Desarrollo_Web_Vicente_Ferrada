@@ -4,8 +4,14 @@ const resultsBody = document.getElementById("search-results-body");
 const searchStatus = document.getElementById("search-status");
 
 const MIN_CHARS = 3;
+const COLSPAN = 7;
 let debounceTimer = null;
 let currentQuery = "";
+
+function miembroDetalleUrl(miembroId) {
+  const base = window.FLASK_MIEMBROS_BASE_URL || "/miembros/";
+  return `${base}${encodeURIComponent(miembroId)}`;
+}
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -41,14 +47,16 @@ function buildNotaSelectOptions() {
 
 function renderEvaluarCell(actividadId) {
   return `
-    <div class="eval-cell" data-actividad-id="${actividadId}">
+    <div class="eval-cell" data-actividad-id="${actividadId}" data-no-row-nav>
       <button type="button" class="eval-btn" data-action="show-eval">Evaluar</button>
-      <form class="eval-form hidden" data-action="eval-form" aria-label="Seleccionar nota">
-        <select name="nota" aria-label="Nota entre 1 y 7" required>
-          ${buildNotaSelectOptions()}
-        </select>
-        <button type="submit">Guardar</button>
-      </form>
+      <div class="eval-controls hidden" data-action="eval-controls">
+        <form class="eval-form" data-action="eval-form" aria-label="Seleccionar nota">
+          <select name="nota" aria-label="Nota entre 1 y 7" required>
+            ${buildNotaSelectOptions()}
+          </select>
+          <button type="submit">Guardar</button>
+        </form>
+      </div>
       <p class="eval-error hidden" role="alert"></p>
     </div>
   `;
@@ -61,7 +69,7 @@ function renderRows(rows, query) {
       : "Ingresa al menos 3 caracteres para iniciar la búsqueda.";
     resultsBody.innerHTML = `
       <tr>
-        <td colspan="8">${message}</td>
+        <td colspan="${COLSPAN}">${message}</td>
       </tr>
     `;
     return;
@@ -74,11 +82,11 @@ function renderRows(rows, query) {
       const countLabel = totalNotas > 0
         ? `<span class="nota-count">(${totalNotas} eval.)</span>`
         : "";
+      const detalleUrl = miembroDetalleUrl(item.miembroId);
 
       return `
-        <tr data-actividad-id="${escapeHtml(item.actividadId)}">
+        <tr class="data-row-click" data-href="${escapeHtml(detalleUrl)}" data-actividad-id="${escapeHtml(item.actividadId)}">
           <td>${highlightText(item.nombreActividad, query)}</td>
-          <td>${highlightText(item.descripcion, query)}</td>
           <td>${escapeHtml(item.dia)}</td>
           <td>${escapeHtml(item.tipo)}</td>
           <td>${escapeHtml(item.nombreMiembro)}</td>
@@ -93,7 +101,23 @@ function renderRows(rows, query) {
     })
     .join("");
 
+  bindRowClickHandlers();
   bindEvaluarHandlers();
+}
+
+function bindRowClickHandlers() {
+  resultsBody.querySelectorAll(".data-row-click").forEach((row) => {
+    row.addEventListener("click", (event) => {
+      if (event.target.closest("[data-no-row-nav]")) {
+        return;
+      }
+      const href = row.getAttribute("data-href");
+      if (href) {
+        window.location.href = href;
+      }
+    });
+    row.style.cursor = "pointer";
+  });
 }
 
 async function fetchSearchResults(query) {
@@ -133,7 +157,7 @@ async function ejecutarBusqueda(query) {
     searchStatus.textContent = "No se pudo completar la búsqueda.";
     resultsBody.innerHTML = `
       <tr>
-        <td colspan="8">Ocurrió un error al buscar. Intente nuevamente.</td>
+        <td colspan="${COLSPAN}">Ocurrió un error al buscar. Intente nuevamente.</td>
       </tr>
     `;
   }
@@ -142,6 +166,25 @@ async function ejecutarBusqueda(query) {
 function validarNotaEntera(valor) {
   const numero = Number(valor);
   return Number.isInteger(numero) && numero >= 1 && numero <= 7;
+}
+
+function ocultarControlesEvaluacion(evalCell) {
+  const controls = evalCell.querySelector('[data-action="eval-controls"]');
+  const btnEval = evalCell.querySelector('[data-action="show-eval"]');
+  const formEval = evalCell.querySelector('[data-action="eval-form"]');
+  controls.classList.add("hidden");
+  btnEval.classList.remove("hidden");
+  if (formEval) {
+    formEval.reset();
+  }
+}
+
+function mostrarControlesEvaluacion(evalCell) {
+  const controls = evalCell.querySelector('[data-action="eval-controls"]');
+  const btnEval = evalCell.querySelector('[data-action="show-eval"]');
+  btnEval.classList.add("hidden");
+  controls.classList.remove("hidden");
+  controls.querySelector("select").focus();
 }
 
 async function enviarNota(actividadId, nota, errorBox) {
@@ -184,33 +227,38 @@ async function enviarNota(actividadId, nota, errorBox) {
 
   const evalCell = fila.querySelector(".eval-cell");
   if (evalCell) {
-    const formEval = evalCell.querySelector('[data-action="eval-form"]');
-    const btnEval = evalCell.querySelector('[data-action="show-eval"]');
-    formEval.classList.add("hidden");
-    btnEval.classList.remove("hidden");
-    formEval.reset();
+    ocultarControlesEvaluacion(evalCell);
   }
 }
 
 function bindEvaluarHandlers() {
   resultsBody.querySelectorAll('[data-action="show-eval"]').forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
       const cell = button.closest(".eval-cell");
-      const formEval = cell.querySelector('[data-action="eval-form"]');
-      button.classList.add("hidden");
-      formEval.classList.remove("hidden");
-      formEval.querySelector("select").focus();
+      mostrarControlesEvaluacion(cell);
     });
   });
 
   resultsBody.querySelectorAll('[data-action="eval-form"]').forEach((evalForm) => {
+    evalForm.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+
     evalForm.addEventListener("submit", async (event) => {
       event.preventDefault();
+      event.stopPropagation();
       const cell = evalForm.closest(".eval-cell");
       const actividadId = cell.getAttribute("data-actividad-id");
       const nota = evalForm.querySelector('select[name="nota"]').value;
       const errorBox = cell.querySelector(".eval-error");
       await enviarNota(actividadId, nota, errorBox);
+    });
+  });
+
+  resultsBody.querySelectorAll(".eval-cell").forEach((cell) => {
+    cell.addEventListener("click", (event) => {
+      event.stopPropagation();
     });
   });
 }

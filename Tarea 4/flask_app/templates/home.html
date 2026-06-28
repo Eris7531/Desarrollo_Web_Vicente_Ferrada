@@ -24,7 +24,7 @@
             <a class="nav-btn" href="{{ url_for('registro') }}">Registrar Miembro y Actividades</a>
             <a class="nav-btn" href="{{ url_for('miembros') }}">Listado de Miembros</a>
             <a class="nav-btn" href="{{ url_for('estadisticas') }}">Estadísticas (Indicadores y Métricas)</a>
-            <a class="nav-btn" href="http://127.0.0.1:8080/busqueda">Búsqueda de Actividades</a>
+            <a class="nav-btn" href="http://{{ request.host.split(':')[0] }}:8080/busqueda">Búsqueda de Actividades</a>
         </nav>
 
         <section class="home-recent" aria-labelledby="recent-heading">

@@ -13,7 +13,6 @@ public interface ActividadRepository extends JpaRepository<Actividad, Integer> {
             SELECT new com.tarea4spring.tarea4spring.dto.ActividadBusquedaDto(
                 a.id,
                 a.nombre,
-                a.descripcion,
                 a.dia,
                 a.tipo,
                 m.id,
@@ -24,7 +23,6 @@ public interface ActividadRepository extends JpaRepository<Actividad, Integer> {
             JOIN a.miembro m
             JOIN m.comuna c
             WHERE LOWER(a.nombre) LIKE LOWER(CONCAT('%', :termino, '%'))
-               OR LOWER(a.descripcion) LIKE LOWER(CONCAT('%', :termino, '%'))
                OR LOWER(c.nombre) LIKE LOWER(CONCAT('%', :termino, '%'))
             """)
     List<ActividadBusquedaDto> buscarPorTermino(@Param("termino") String termino);

@@ -1,5 +1,30 @@
 .hidden {
-    display: none;
+    display: none !important;
+}
+
+.home-recent-note {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0 0 12px 0;
+}
+
+.data-row-click {
+    cursor: pointer;
+}
+
+.eval-controls.hidden {
+    display: none !important;
+}
+
+.eval-btn.hidden {
+    display: none !important;
+}
+
+.eval-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
 }
 
 body {
@@ -183,13 +208,6 @@ select {
 
 .eval-btn:hover {
     background-color: #f0f0f0;
-}
-
-.eval-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    align-items: center;
 }
 
 .eval-form select {

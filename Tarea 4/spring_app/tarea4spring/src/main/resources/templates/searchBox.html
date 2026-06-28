@@ -10,14 +10,15 @@
     <div class="main-container main-container--wide">
         <header class="list-header">
             <h1>Búsqueda de actividades</h1>
-            <p class="page-intro">Escribe al menos 3 caracteres para buscar por nombre, descripción o comuna.</p>
+            <p class="page-intro">Escribe al menos 3 caracteres para buscar por nombre de actividad o comuna.</p>
+            <p class="home-recent-note">Puede hacer clic en una fila para ver el detalle del miembro en Flask.</p>
         </header>
 
         <form id="search-form" class="controls-panel" aria-label="Buscar actividades">
             <div class="control-row">
                 <label for="search-input">Buscar</label>
                 <input id="search-input" name="query" type="search" autocomplete="off"
-                       placeholder="Nombre, descripción o comuna">
+                       placeholder="Nombre de actividad o comuna">
             </div>
             <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
         </form>
@@ -28,7 +29,6 @@
                 <thead>
                     <tr>
                         <th scope="col">Nombre actividad</th>
-                        <th scope="col">Descripción</th>
                         <th scope="col">Día</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Miembro</th>
@@ -39,7 +39,7 @@
                 </thead>
                 <tbody id="search-results-body">
                     <tr>
-                        <td colspan="8">Ingresa al menos 3 caracteres para iniciar la búsqueda.</td>
+                        <td colspan="7">Ingresa al menos 3 caracteres para iniciar la búsqueda.</td>
                     </tr>
                 </tbody>
             </table>
@@ -51,7 +51,8 @@
     </div>
 
     <script th:inline="javascript">
-        window.FLASK_HOME_URL = /*[[${flaskHomeUrl}]]*/ "http://127.0.0.1:5000/";
+        window.FLASK_HOME_URL = /*[[${flaskHomeUrl}]]*/ "/";
+        window.FLASK_MIEMBROS_BASE_URL = /*[[${flaskMiembrosBaseUrl}]]*/ "/miembros/";
     </script>
     <script th:src="@{/js/searchRelated.js}"></script>
 </body>

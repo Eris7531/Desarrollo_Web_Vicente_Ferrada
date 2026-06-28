@@ -4,7 +4,6 @@ public class ActividadBusquedaDto {
 
     private Integer actividadId;
     private String nombreActividad;
-    private String descripcion;
     private String dia;
     private String tipo;
     private Integer miembroId;
@@ -16,7 +15,6 @@ public class ActividadBusquedaDto {
     public ActividadBusquedaDto(
             Integer actividadId,
             String nombreActividad,
-            String descripcion,
             String dia,
             String tipo,
             Integer miembroId,
@@ -24,7 +22,6 @@ public class ActividadBusquedaDto {
             String nombreComuna) {
         this.actividadId = actividadId;
         this.nombreActividad = nombreActividad;
-        this.descripcion = descripcion;
         this.dia = dia;
         this.tipo = tipo;
         this.miembroId = miembroId;
@@ -48,14 +45,6 @@ public class ActividadBusquedaDto {
 
     public void setNombreActividad(String nombreActividad) {
         this.nombreActividad = nombreActividad;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public String getDia() {
