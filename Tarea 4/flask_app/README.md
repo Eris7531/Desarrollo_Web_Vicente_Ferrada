@@ -143,3 +143,26 @@ Así, este botón nos llevará a una vista dedicada exclusivamente a la búsqued
 5. *(27/06)* Como no tenemos un template *'base.html'*, agregar un botón de búsqueda de actividades que se encuentre presente en todas las vistas para que este sea accesible en cualquier parte de la página es dificultoso y hay preocupaciones de que el agregar un template de este estilo pueda romper el código actualmente funcional de las tareas anteriores.
 
 Por esto, y como se indica en el punto (4), se tendrá una vista exclusiva para la búsqueda, y el acceso a esta se encontrará en la página de inicio, es decir, dentro de *'home.html'* se agregará un cuarto botón para acceder a la búsqueda.
+
+6. *(28/06)* Se logra inicializar correctamente Spring Boot utilizando extención Spring Initializer.
+
+7. *(28/06)* Se logra ejecutar Spring Boot en conjunto a los contenidos Flask correspondientes a las tareas 1, 2 y 3. Para esto se requiere tener dos pestañas de terminal. En la primera se ejecuta lo mismo que en las tareas anteriores:
+
+*Terminal 1:* 
+
+cd "c:/.../flask_app
+flask run //o ejecutar 'python app.py'
+
+*Terminal 2:*
+
+$env:JAVA_HOME = "C:/Program Files/Java/jdk-26.0.1"
+cd "c:/.../spring_app/tarea4spring"
+.\mvnw.cmd spring-boot:run
+
+
+Finalmente, se abre desde la terminal 1 la página 'http:[//]127.0.0.1:5000'.
+
+
+8. *(28/06)*
+
+9. *(28/06)*

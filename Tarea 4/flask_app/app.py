@@ -392,17 +392,20 @@ def get_actividades_por_tipo():
 
 # Inicio Adiciones tarea 4: Resultados de Búsqueda.
 
-@app.route("/busqueda", methods=["GET"])
-def busqueda():
-    return render_template("searchBox.html")
+#@app.route("/busqueda", methods=["GET"])
+#def busqueda():
+#    return render_template("searchBox.html")
 
-@app.route("/busqueda/resultados", methods=["POST"])
-def resultados_busqueda():
-    data = request.get_json(silent=True) or {}
-    query_value = (data.get("query") or "").strip()
-    datos = dbm.actividad_miembro_comuna_detalle(search_term=query_value)
-    return {"datos": datos}
+#@app.route("/busqueda/resultados", methods=["POST"])
+#def resultados_busqueda():
+#    data = request.get_json(silent=True) or {}
+#    query_value = (data.get("query") or "").strip()
+#    datos = dbm.actividad_miembro_comuna_detalle(search_term=query_value)
+#    return {"datos": datos}
 
+
+# Comentadas pues no se deben implementar aquí si no en Spring Boot
+# Guardadas en caso de ser útiles después.
 # Fin Adiciones tarea 4: Resultados de Búsqueda.
 
 if __name__ == "__main__":

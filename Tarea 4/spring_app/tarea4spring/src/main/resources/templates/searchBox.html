@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Actividades</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="main-container main-container--wide">
+        <header class="list-header">
+            <h1>Búsqueda de actividades</h1>
+            <p class="page-intro">Escribe al menos 3 caracteres para buscar por nombre, descripción o comuna.</p>
+        </header>
+
+        <form id="search-form" class="controls-panel" aria-label="Buscar actividades">
+            <div class="control-row">
+                <label for="search-input">Buscar</label>
+                <input id="search-input" name="query" type="search" autocomplete="off"
+                       placeholder="Nombre, descripción o comuna">
+            </div>
+            <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <caption class="sr-only">Resultados de búsqueda</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre actividad</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Día</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Miembro</th>
+                        <th scope="col">Comuna</th>
+                        <th scope="col">Nota</th>
+                        <th scope="col">Evaluar</th>
+                    </tr>
+                </thead>
+                <tbody id="search-results-body">
+                    <tr>
+                        <td colspan="8">Ingresa al menos 3 caracteres para iniciar la búsqueda.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <nav class="navigation-container list-footer-nav">
+            <a class="nav-btn" th:href="${flaskHomeUrl}">Volver al inicio (Flask)</a>
+        </nav>
+    </div>
+
+    <script th:inline="javascript">
+        window.FLASK_HOME_URL = /*[[${flaskHomeUrl}]]*/ "http://127.0.0.1:5000/";
+    </script>
+    <script th:src="@{/js/searchRelated.js}"></script>
+</body>
+</html>
