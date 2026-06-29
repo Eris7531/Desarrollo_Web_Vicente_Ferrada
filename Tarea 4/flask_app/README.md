@@ -155,6 +155,7 @@ flask run //o ejecutar 'python app.py'
 
 *Terminal 2:*
 
+$env:JAVA_HOME = "C:\Program Files\Java\jdk-26.0.1"    
 cd "c:/.../spring_app/tarea4spring"
 .\mvnw.cmd spring-boot:run
 
@@ -169,3 +170,5 @@ Finalmente, se abre desde la terminal 1 la página 'http:[//]127.0.0.1:5000'.
 10. *(28/06)* Dado el punto anterior, se consideró agregar la función de 'Evaluar' en la vista 'miembro_detalle', pero se decidió que mejor no, ya que se debería implementar dos funciones que interactuan con la tabla 'tabla-nota' con el mismo funcionamiento en los fos frameworks, flask y spring root. Hay posibilidad de romper partes del código ya funcional agregando esta función ya que no tengo claro cómo hacerlo, además de las restricciones de tiempo.
 
 11. *(28/06)* En la versión actual de la página/aplicación es posible 'Evaluar' una actividad múltiples veces, lo cual sería un problema en una página como la nuestra si fuera real. Como no se incorporó cuentas, no estoy seguro de cómo se podría limitar la cantidad de 'Evaluaciones' a cada actividad individual a 1. Por esto no se implementará, solamente se hará esta observación del posible problema que esto tiene.
+
+12. *(29/06)* Como no fue posible agregar el atributo *actividad.descripcion* debido a que no fue implementada correctamente en las tareas anteriores, quedamos con un buscador que solo filtra en función de 2 atributos de la los datos obtenidos, *'actividad.nombre'* y *'comuna.nombre'*. Por esto, agregaremos un factor más a la búsqueda, el cual será sobre el atributo *'actividad.tipo'*, pues es el que lógicamente sería más útil para filtrar actividades en la vida real.

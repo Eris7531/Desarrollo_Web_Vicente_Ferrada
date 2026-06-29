@@ -88,7 +88,7 @@ function renderRows(rows, query) {
         <tr class="data-row-click" data-href="${escapeHtml(detalleUrl)}" data-actividad-id="${escapeHtml(item.actividadId)}">
           <td>${highlightText(item.nombreActividad, query)}</td>
           <td>${escapeHtml(item.dia)}</td>
-          <td>${escapeHtml(item.tipo)}</td>
+          <td>${highlightText(item.tipo, query)}</td>
           <td>${escapeHtml(item.nombreMiembro)}</td>
           <td>${highlightText(item.nombreComuna, query)}</td>
           <td class="nota-cell" data-nota-cell>

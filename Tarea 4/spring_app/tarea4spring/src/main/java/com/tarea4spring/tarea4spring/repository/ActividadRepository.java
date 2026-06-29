@@ -24,6 +24,7 @@ public interface ActividadRepository extends JpaRepository<Actividad, Integer> {
             JOIN m.comuna c
             WHERE LOWER(a.nombre) LIKE LOWER(CONCAT('%', :termino, '%'))
                OR LOWER(c.nombre) LIKE LOWER(CONCAT('%', :termino, '%'))
+               OR LOWER(a.tipo) LIKE LOWER(CONCAT('%', :termino, '%'))
             """)
     List<ActividadBusquedaDto> buscarPorTermino(@Param("termino") String termino);
 }
